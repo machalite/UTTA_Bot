@@ -49,6 +49,26 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 0
 
+    if event.message.text == "!commands":
+        buttons_template = TemplateSendMessage(
+            alt_text='目錄 template',
+            template=ButtonsTemplate(
+                title='List of Commands',
+                text='Select a command',
+                actions=[
+                    MessageTemplateAction(
+                        label=Strings().REGISTER,
+                        text=Strings().REGISTER
+                    ),
+                    MessageTemplateAction(
+                        label='INI LABEL',
+                        text='ini text'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))

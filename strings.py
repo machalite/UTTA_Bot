@@ -1,6 +1,17 @@
 class Strings:
 	def __init__(self):
-		self.HELP = " \
+        self.REGISTER = "!register"
+        self.TODAY = "!today"
+        self.ROOMCHECK = "!roomcheck"
+        self.SCHEDULE = "!schedule"
+        self.NEXT = "!next"
+        self.WHERE = "!where"
+        self.CHECK = "!check"
+        self.CHANGES = "!changes"
+        self.TRANSLATE = "!translate"
+        self.SEARCH = "!search"
+        self.HELP = "!help"
+		self.ABOUT = " \
             \nList Of Commands: \n \
             \n!register <student pin> \
             \n!today \
@@ -12,4 +23,4 @@ class Strings:
             \n!changes \
             \n!translate <text> \
             \n!search <kata kunci> \
-            \n!help \ "
+            \n!help"
