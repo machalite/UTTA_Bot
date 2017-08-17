@@ -100,7 +100,7 @@ def handle_message(event):
                     MessageTemplateAction(
                         label=Strings().HELP,
                         text=Strings().HELP
-                    ),
+                    )
                 ]
             )
         )
