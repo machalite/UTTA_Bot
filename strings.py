@@ -1,5 +1,5 @@
 class Strings:
-	def __init__(self):
+    def __init__(self):
         self.REGISTER = "!register"
         self.TODAY = "!today"
         self.ROOMCHECK = "!roomcheck"
@@ -11,16 +11,3 @@ class Strings:
         self.TRANSLATE = "!translate"
         self.SEARCH = "!search"
         self.HELP = "!help"
-		self.ABOUT = " \
-            \nList Of Commands: \n \
-            \n!register <student pin> \
-            \n!today \
-            \n!roomcheck <room id/room name>\
-            \n!schedule \
-            \n!next \
-            \n!where <room name/building name> \
-            \n!check <course name/course ID> \
-            \n!changes \
-            \n!translate <text> \
-            \n!search <kata kunci> \
-            \n!help"
