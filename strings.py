@@ -1,8 +1,7 @@
 class Strings:
 	def __init__(self):
-        # strings to be displayed when user request !help
 		self.HELP = " \
-            \n[~] List Of Commands: \n \
+            \n[~] List Of Commands: \
             \n[1]. !register <student pin> \
             \n[2]. !today \
             \n[3]. !roomcheck <room id/room name>\
@@ -13,4 +12,4 @@ class Strings:
             \n[8]. !changes \n \
             \n[9]. !translate <text> \
             \n[10]. !search <kata kunci> \
-            \n[11]. !help \"
+            \n[11]. !help \ "
