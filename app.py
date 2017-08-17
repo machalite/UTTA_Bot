@@ -48,12 +48,10 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 0
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=event.message.text)
-        )
-
-    return 'OK'
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+    return 0
 
 
 if __name__ == '__main__':
