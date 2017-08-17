@@ -1,9 +1,9 @@
 class Strings:
 	def __init__(self):
 		self.HELP = " \
-            [~] List Of Commands: \n \
+            \nList Of Commands: \n \
             \n!register <student pin> \
-            \!today \
+            \n!today \
             \n!roomcheck <room id/room name>\
             \n!schedule \
             \n!next \
