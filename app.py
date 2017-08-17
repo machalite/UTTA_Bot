@@ -1,10 +1,3 @@
-import requests
-import re
-import random
-from bs4 import BeautifulSoup
-from flask import Flask, request, abort
-from imgurpython import ImgurClient
-
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -12,6 +5,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import *
+from strings import *
 
 app = Flask(__name__)
 line_bot_api = LineBotApi('DUTE1UOjEqCQpJynGDa59KSV42WXmVjM8/Dw2qaFuyA9ePaA40Qy2lHRcfRaM0SzM3HpvNYySB2IrkJGiQ+1RktH1Ko6285vipalBZ8WtDy+6T1pRZDnS/NHDvUgadaxLCR0TbACjTKRyZkMpOjYUgdB04t89/1O/w1cDnyilFU=')
@@ -43,6 +37,12 @@ def handle_message(event):
     print("event.message.text:", event.message.text)
     if event.message.text == "coba":
         content = "Berhasil !!"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "!help":
+        content = Strings().HELP
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
