@@ -4,6 +4,7 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
+from flask import Flask, request, abort
 from linebot.models import *
 from strings import *
 
