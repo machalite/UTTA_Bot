@@ -55,7 +55,7 @@ def handle_message(event):
             template=ButtonsTemplate(
                 title='List of Commands',
                 text='Select a command',
-                # thumbnail_image_url=Strings().IMGUR_UTTA,
+                thumbnail_image_url=Strings().IMGUR_UTTA,
                 actions=[
                     MessageTemplateAction(
                         label=Strings().REGISTER,
