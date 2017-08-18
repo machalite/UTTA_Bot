@@ -16,3 +16,6 @@ class Strings:
         self.ERR_PC = "This command is incompatible on LINE PC"
         # URLs
         self.IMGUR_UTTA = "https://i.imgur.com/qKkE2bj.jpg"
+        # long strings
+        self.ABOUT = "UNIVERSITY TIME TABLE BOT\n \
+        Created by Jonathan 2013042032"

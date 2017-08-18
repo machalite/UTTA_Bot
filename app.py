@@ -42,8 +42,8 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if event.message.text == "!help":
-        content = Strings().HELP
+    if event.message.text == "!about":
+        content = Strings().ABOUT
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
@@ -55,7 +55,7 @@ def handle_message(event):
             template=ButtonsTemplate(
                 title='List of Commands',
                 text='Select a command',
-                # thumbnail_image_url=Strings().IMGUR_UTTA,
+                thumbnail_image_url=Strings().IMGUR_UTTA,
                 actions=[
                     MessageTemplateAction(
                         label=Strings().REGISTER,
