@@ -55,7 +55,7 @@ def handle_message(event):
             template=ButtonsTemplate(
                 title='List of Commands',
                 text='Select a command',
-                #thumbnail_image_url=Strings().IMGUR_UTTA,
+                # thumbnail_image_url=Strings().IMGUR_UTTA,
                 actions=[
                     MessageTemplateAction(
                         label=Strings().REGISTER,
@@ -68,34 +68,6 @@ def handle_message(event):
                     MessageTemplateAction(
                         label=Strings().ROOMCHECK,
                         text=Strings().ROOMCHECK
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().SCHEDULE,
-                        text=Strings().SCHEDULE
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().NEXT,
-                        text=Strings().NEXT
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().WHERE,
-                        text=Strings().WHERE
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().CHECK,
-                        text=Strings().CHECK
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().CHANGES,
-                        text=Strings().CHANGES
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().TRANSLATE,
-                        text=Strings().TRANSLATE
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().SEARCH,
-                        text=Strings().SEARCH
                     ),
                     MessageTemplateAction(
                         label=Strings().HELP,
