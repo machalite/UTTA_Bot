@@ -10,8 +10,8 @@ from strings import *
 from functions import *
 
 app = Flask(__name__)
-line_bot_api = LineBotApi('DUTE1UOjEqCQpJynGDa59KSV42WXmVjM8/Dw2qaFuyA9ePaA40Qy2lHRcfRaM0SzM3HpvNYySB2IrkJGiQ+1RktH1Ko6285vipalBZ8WtDy+6T1pRZDnS/NHDvUgadaxLCR0TbACjTKRyZkMpOjYUgdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('a62c4f246f3dfe799fa69c44d9d99a82')
+line_bot_api = LineBotApi('cnCjBT66E+ViXO8qj7j7Rj30oeHOtrbqo6gqSxxeW++l28tLJbHdGAUPs8a6MnjAZJHAiymHVDrDfs1xCe89VQ+wWY0RrvHfudjn/5OEfx5IaXRGwX/ZkYJl1ouxbBw/4W+HD7ryJDEjjgmSzdbtWwdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('13235caf7d4824dabbbf2a6393c32dfa')
 
 
 @app.route("/callback", methods=['POST'])
