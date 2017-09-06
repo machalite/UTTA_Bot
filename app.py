@@ -7,6 +7,7 @@ from linebot.exceptions import (
 from flask import Flask, request, abort
 from linebot.models import *
 from strings import *
+from functions import *
 
 app = Flask(__name__)
 line_bot_api = LineBotApi('DUTE1UOjEqCQpJynGDa59KSV42WXmVjM8/Dw2qaFuyA9ePaA40Qy2lHRcfRaM0SzM3HpvNYySB2IrkJGiQ+1RktH1Ko6285vipalBZ8WtDy+6T1pRZDnS/NHDvUgadaxLCR0TbACjTKRyZkMpOjYUgdB04t89/1O/w1cDnyilFU=')
@@ -48,7 +49,12 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-
+    if event.message.text == "!user":
+        content = selUser()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
     if event.message.text == "!commands":
         buttons_template = TemplateSendMessage(
             alt_text=Strings().ERR_PC,
@@ -59,7 +65,7 @@ def handle_message(event):
                 actions=[
                     MessageTemplateAction(
                         label=Strings().REGISTER,
-                        text=Strings().REGISTER
+                        text=Strings().INST_REGISTER
                     ),
                     MessageTemplateAction(
                         label=Strings().TODAY,
