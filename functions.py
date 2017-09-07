@@ -21,6 +21,5 @@ def selUser():
     for row in cur.fetchall():
         content = row[0]
 
-    return content
-
     db.close()
+    return content

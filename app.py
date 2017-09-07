@@ -51,7 +51,6 @@ def handle_message(event):
         return 'OK'
     if event.message.text == "!user":
         content = selUser()
-        print("!user called!")
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
