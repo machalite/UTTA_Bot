@@ -5,10 +5,10 @@ import MySQLdb
 
 
 def selUser():
-    db = MySQLdb.connect(host=Settings().DBhost,    # your host, usually localhost
-                         user=Settings().DBuser,         # your username
-                         passwd=Settings().DBpass,  # your password
-                         db=Settings().DBname)        # name of the data base
+    db = MySQLdb.connect(host=Settings().DBhost,
+                         user=Settings().DBuser,
+                         passwd=Settings().DBpass,
+                         db=Settings().DBname)
 
     # you must create a Cursor object. It will let
     #  you execute all the queries you need
