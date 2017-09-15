@@ -15,7 +15,7 @@ def selUser():
     cur = db.cursor()
 
     # Use all the SQL you like
-    cur.execute("SELECT * FROM user")
+    cur.execute("SELECT * FROM faculty")
 
     # print all the first cell of all the rows
     for row in cur.fetchall():
