@@ -70,14 +70,6 @@ def handle_message(event):
                     MessageTemplateAction(
                         label=Strings().TODAY,
                         text=Strings().TODAY
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().ROOMCHECK,
-                        text=Strings().ROOMCHECK
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().HELP,
-                        text=Strings().HELP
                     )
                 ]
             )
