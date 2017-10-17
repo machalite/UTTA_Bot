@@ -33,8 +33,11 @@ def today():
 
     # print all the first cell of all the rows
     result = "Today's schedule:\n"
+
     for row in cur.fetchall():
-        result += row[0] + row[1] + row[2] + row[3] + row[4] + "\n"
+        for x in row:
+            result += str(row[x])
+        result += "\n"
 
     # close connection
     con.close()
