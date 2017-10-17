@@ -31,9 +31,9 @@ class Functions:
         cur.execute(qry)
 
         # print all the first cell of all the rows
-        result="Today's schedule:\n"
+        result = "Today's schedule:\n"
         for row in cur.fetchall():
-            result + = row[0] + row[1] + row[2] + row[3] + row[4] + "\n"
+            result += row[0] + row[1] + row[2] + row[3] + row[4] + "\n"
 
         db.close()
         return result
