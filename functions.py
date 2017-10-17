@@ -16,7 +16,9 @@ def selUser():
 
     # print all the first cell of all the rows
     for row in cur.fetchall():
-        content = row[0]
+        for x in range(len(row)):
+            result += str(row[x])
+        result += "\n"
 
     # close connection
     con.close()
@@ -40,9 +42,9 @@ def today():
     result = "Today's schedule:\n"
 
     for row in cur.fetchall():
-        for x in range(len(row)):
-            result += str(row[x])
-        result += "\n"
+        result += str(row[1])+" "+str(row[0])+"\n"
+        result += str(row[2])+" - "+str(row[3])+"\n"
+        result += str(row[4])+"\n\n"
 
     # close connection
     con.close()
