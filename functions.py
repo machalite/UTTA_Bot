@@ -25,7 +25,7 @@ class Functions:
 
     def today():
         # SQL statement
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=today AND c.active=1 AND t.student=studentId ORDER BY c.startclass"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=today AND c.active=1 AND t.student=1 ORDER BY c.startclass"
 
         # Use all the SQL you like
         cur.execute(qry)
