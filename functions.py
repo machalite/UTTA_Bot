@@ -40,7 +40,7 @@ def today():
     result = "Today's schedule:\n"
 
     for row in cur.fetchall():
-        for x in row:
+        for x in range(len(row)):
             result += str(row[x])
         result += "\n"
 
