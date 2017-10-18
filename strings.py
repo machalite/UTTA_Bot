@@ -16,7 +16,7 @@ class Strings:
         self.INST_REGISTER = "Register your student ID for personalised time table.\nExample !register 2013042032"
         # error messages
         self.ERR_PC = "This command is incompatible on LINE PC"
-        self.ERR_FATAL = "Failed"
+        self.ERR_FATAL = "Exception error. Please contact administrator!"
         # URLs
         self.IMGUR_UTTA = "http://imgur.com/Hn0d1DJ"
         # long strings

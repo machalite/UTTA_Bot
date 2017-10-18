@@ -83,3 +83,29 @@ def verify(id):
     # close connection
     con.close()
     return result
+
+
+def schedule():
+    # create DB connection
+    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
+                          Settings().DBpass, Settings().DBname)
+
+    # create cursor for query data execution
+    cur = con.cursor()
+    studentId = verify()
+
+    if studentId == 0:
+        return Strings().UNREG
+    elif studentId == -1:
+        return Strings().ERR_FATAL
+    else:
+        # Get student corresponding to the submitted line id
+        qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
+
+        cur.execute(qry)
+        # contain fetch result in array variable
+        row = cur.fetchall()
+
+        # close connection
+        con.close()
+        return result
