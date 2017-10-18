@@ -36,12 +36,10 @@ def today():
 
     # fetch today's classes
     qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=1 AND c.active=1 AND t.student=1 ORDER BY c.startclass"
-
-    # Use all the SQL you like
     cur.execute(qry)
 
-    # print all the first cell of all the rows
-    result = "Today's schedule:\n"
+    # print header
+    result = Strings().TODAY_HEADER
 
     # arranging query so it displayed nicely
     for row in cur.fetchall():
@@ -54,7 +52,7 @@ def today():
     return result
 
 
-def verify(id):
+def verify(userId):
     # create DB connection
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
                           Settings().DBpass, Settings().DBname)
@@ -63,8 +61,7 @@ def verify(id):
     cur = con.cursor()
 
     # Get student corresponding to the submitted line id
-    qry = "SELECT id, name FROM student WHERE lineid=" + id
-
+    qry = "SELECT id, name FROM student WHERE lineid=" + userId
     cur.execute(qry)
     # contain fetch result in array variable
     row = cur.fetchall()
@@ -85,17 +82,20 @@ def verify(id):
     return result
 
 
-def schedule():
+def schedule(userId):
     # create DB connection
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
                           Settings().DBpass, Settings().DBname)
 
     # create cursor for query data execution
     cur = con.cursor()
-    studentId = verify()
+    # contain returned studentId
+    studentId = verify(userId)
 
+    # student not registered
     if studentId == 0:
         return Strings().UNREG
+    # duplicate student or other errors
     elif studentId == -1:
         return Strings().ERR_FATAL
     else:
@@ -103,8 +103,12 @@ def schedule():
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
 
         cur.execute(qry)
-        # contain fetch result in array variable
-        row = cur.fetchall()
+        # print header
+        result = Strings().SCHEDULE_HEADER
+
+        # arranging query so it displayed nicely
+        for row in cur.fetchall():
+            result += str(row[1])+" "+str(row[0])+" "+str(row[3])+"\n"
 
         # close connection
         con.close()

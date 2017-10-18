@@ -1,6 +1,6 @@
 class Strings:
     def __init__(self):
-        # command names
+        # command keywords
         self.REGISTER = "!register"
         self.TODAY = "!today"
         self.ROOMCHECK = "!roomcheck"
@@ -28,6 +28,9 @@ class Strings:
         self.REG_FAILED = "Registration failed! Please contact administrator for assistance"
         # messages on !today
         self.TODAY_EMPTY = "There is no class for today"
+        self.TODAY_HEADER = "Today's schedule:\n"
         # messages on !roomcheck
         self.ROOM_UNREG = "Room not found. Please try again"
         self.ROOM_EMPTY = "There is no class for in this room for today"
+        # messages on !schedule
+        self.SCHEDULE_HEADER = "Weekly schedule:\n"

@@ -61,6 +61,13 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
+    if event.message.text == Strings().SCHEDULE:
+        profile = line_bot_api.get_profile(event.source.user_id)
+        content = schedule(profile.user_id)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
     if event.message.text == "!commands":
         buttons_template = TemplateSendMessage(
             alt_text=Strings().ERR_PC,
