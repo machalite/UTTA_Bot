@@ -61,7 +61,8 @@ def verify(userId):
     cur = con.cursor()
 
     # Get student corresponding to the submitted line id
-    qry = "SELECT id, name FROM student WHERE lineid=" + userId
+    qry = "SELECT id, name FROM student WHERE lineid='" + userId + "'"
+    print userId
     cur.execute(qry)
     # contain fetch result in array variable
     row = cur.fetchall()
