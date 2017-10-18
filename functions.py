@@ -91,7 +91,8 @@ def schedule(userId):
     cur = con.cursor()
     # contain returned studentId
     studentId = verify(userId)
-
+    print(studentId)
+    
     # student not registered
     if studentId == 0:
         return Strings().UNREG
