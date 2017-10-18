@@ -72,7 +72,7 @@ def verify(userId):
         result = 0
     elif len(row) == 1:
         # there is 1 match, get the student id
-        result = str(row[0])
+        result = str(row[0][0])
     else:
         # other errors
         result = -1
@@ -92,7 +92,7 @@ def schedule(userId):
     # contain returned studentId
     studentId = verify(userId)
     print(studentId)
-    
+
     # student not registered
     if studentId == 0:
         return Strings().UNREG
