@@ -72,7 +72,7 @@ def verify(userId):
         result = 0
     elif len(row) == 1:
         # there is 1 match, get the student id
-        result = row[0]
+        result = str(row[0])
     else:
         # other errors
         result = -1
@@ -100,7 +100,7 @@ def schedule(userId):
         return Strings().ERR_FATAL
     else:
         # Get student corresponding to the submitted line id
-        qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + str(studentId) + " AND c.active=1 ORDER BY c.day, c.startclass"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
 
         cur.execute(qry)
         # print header
