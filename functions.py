@@ -70,7 +70,7 @@ def register(authCode, userId):
         # there is 1 match, check if lineid is empty (not registered before)
         if row[0][1] == "":
             # add user lineid to database
-            sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + row[0][0]
+            sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
             cur.execute(sql)
             result = Strings().REG_SUCCESS
             # record register activity
