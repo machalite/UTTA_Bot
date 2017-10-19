@@ -47,9 +47,10 @@ def usageLog(studentId, activityId):
 
     now = str(datetime.now())
     print(now)
-    qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
-    print(qry)
-    cur.execute(qry)
+    sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
+    print(sql)
+    cur.execute(sql)
+    con.commit()
     con.close()
 
 
@@ -76,11 +77,12 @@ def register(authCode, userId):
             # add user lineid to database
             sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
             cur.execute(sql)
-            result = Strings().REG_SUCCESS
-            print("success update")
-
+            con.commit()
             # close connection
             con.close()
+
+            result = Strings().REG_SUCCESS
+            print("success update")
             # record register activity
             usageLog(row[0][0], 1)
         else:
