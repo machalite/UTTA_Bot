@@ -130,7 +130,7 @@ def today(userId):
             # close connection
             con.close()
             # record activity
-            usageLog(row[0][0], 2)
+            usageLog(studentId, 2)
 
         else:
             result = Strings().TODAY_EMPTY
