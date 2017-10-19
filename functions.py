@@ -5,6 +5,7 @@ from datetime import datetime
 
 import MySQLdb
 
+
 def connectDb():
     # create DB connection
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
@@ -56,7 +57,7 @@ def register(authCode, userId):
     cur = con.cursor()
 
     # search for matching authentication code
-    qry = "SELECT id, lineid FROM student WHERE authcode='" + authCode + "' AND active=1"
+    qry = "SELECT id, lineid FROM student WHERE authcode=" + authCode + " AND active=1"
     cur.execute(qry)
     # contain fetch result in array variable
     row = cur.fetchall()
