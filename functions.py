@@ -46,9 +46,7 @@ def usageLog(studentId, activityId):
     cur = con.cursor()
 
     now = str(datetime.now())
-    print(now)
     sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
-    print(sql)
     cur.execute(sql)
     con.commit()
     con.close()
@@ -68,10 +66,8 @@ def register(authCode, userId):
     # check if there is a record with matching authcode
     if len(row) == 0:
         # no matching lineid
-        print("not match")
         result = Strings().REG_INVALID
     elif len(row) == 1:
-        print("match")
         # there is 1 match, check if lineid is empty (not registered before)
         if row[0][1] == "":
             # add user lineid to database
@@ -82,11 +78,9 @@ def register(authCode, userId):
             con.close()
 
             result = Strings().REG_SUCCESS
-            print("success update")
             # record register activity
             usageLog(row[0][0], 1)
         else:
-            print("error !!")
             result = Strings().REG_EXPIRED
     else:
         # other errors
@@ -96,6 +90,15 @@ def register(authCode, userId):
 
 def today(userId):
     studentId = verify(userId)
+    # determine which day is today
+    # 0=monday, 6=sunday
+    day = datetime.now().weekday()
+
+    # sync day variable so 0=sunday and 5=saturday
+    if day == 6:
+        day = 0
+    else:
+        day += 1
 
     # student not registered
     if studentId == 0:
@@ -109,7 +112,7 @@ def today(userId):
         cur = con.cursor()
 
         # fetch today's classes
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=1 AND c.active=1 AND t.student=1 ORDER BY c.startclass"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(day) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
         cur.execute(qry)
 
         # print header
@@ -124,7 +127,7 @@ def today(userId):
         # close connection
         con.close()
         # record activity
-        usageLog(row[0][0],2)
+        usageLog(row[0][0], 2)
         return result
 
 
