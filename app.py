@@ -48,7 +48,8 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 'OK'
     if inputMsg.startswith(Strings().REGISTER):
-        authCode = inputMsg[len(Strings().REGISTER) + 1:end]
+        index = len(Strings().REGISTER) + 1
+        authCode = inputMsg[index:end]
         print(authCode)
         content = register(authCode, profile.user_id)
         line_bot_api.reply_message(
