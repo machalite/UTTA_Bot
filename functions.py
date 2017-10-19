@@ -65,17 +65,21 @@ def register(authCode, userId):
     # check if there is a record with matching authcode
     if len(row) == 0:
         # no matching lineid
+        print("not match")
         result = Strings().REG_INVALID
     elif len(row) == 1:
+        print("match")
         # there is 1 match, check if lineid is empty (not registered before)
         if row[0][1] == "":
             # add user lineid to database
             sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
             cur.execute(sql)
             result = Strings().REG_SUCCESS
+            print("success update")
             # record register activity
             usageLog(row[0][0], 1)
         else:
+            print("error !!")
             result = Strings().REG_EXPIRED
     else:
         # other errors
