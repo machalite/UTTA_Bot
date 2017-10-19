@@ -113,6 +113,7 @@ def today(userId):
 
         # fetch today's classes
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(day) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
+        print(qry)
         cur.execute(qry)
 
         row = cur.fetchall()
@@ -133,7 +134,7 @@ def today(userId):
 
         else:
             result = Strings().TODAY_EMPTY
-            
+
         return result
 
 
