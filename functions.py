@@ -9,10 +9,7 @@ def connectDb():
     # create DB connection
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
                           Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
-    cur = con.cursor()
-    return cur
+    return con
 
 
 def selUser():
@@ -126,7 +123,9 @@ def schedule(userId):
 
 
 def register(authCode, userId):
-    cur = connectDb()
+    con = connectDb()
+    cur = con.cursor()
+    
     # search for matching authentication code
     qry = "SELECT id, name, lineid FROM student WHERE authcode='" + authCode + "'"
     cur.execute(qry)

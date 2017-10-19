@@ -25,7 +25,7 @@ class Strings:
         self.REG_SUCCESS = "Sucessfully registered!"
         self.UNREG = "You are not registered. Please register using !register."
         self.REG_INVALID = "Invalid PIN! Please try again or contact administrator for more information."
-        self.REG_EXPIRED = "PIN already used! Please try again or contact administrator for more information."
+        self.REG_EXPIRED = "You are already registered"
         self.REG_FAILED = "Registration failed! Please contact administrator for assistance"
         # messages on !today
         self.TODAY_EMPTY = "There is no class for today"
