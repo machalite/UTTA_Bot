@@ -46,7 +46,7 @@ def usageLog(studentId, activityId):
     cur = con.cursor()
 
     now = datetime.datetime.now()
-    qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", " + str(now) + ")"
+    qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + str(now) + "')"
     cur.execute(qry)
     con.close()
 
