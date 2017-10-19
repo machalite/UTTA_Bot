@@ -125,15 +125,14 @@ def today(userId):
 
             # arranging query data so it displayed nicely
             for row in cur.fetchall():
-                result += str(row[1])+" "+str(row[0])+"\n"
-                result += str(row[2])+" - "+str(row[3])+"\n"
-                result += str(row[4])+"\n\n"
+                result += str(row[1]) + " " + str(row[0]) + "\n"
+                result += str(row[2]) + " - " + str(row[3]) + "\n"
+                result += str(row[4]) + "\n\n"
 
             # close connection
             con.close()
             # record activity
             usageLog(studentId, 2)
-
         else:
             result = Strings().TODAY_EMPTY
 
