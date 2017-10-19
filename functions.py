@@ -117,6 +117,8 @@ def today(userId):
         cur.execute(qry)
 
         row = cur.fetchall()
+        print(row)
+        print(len(row))
         if len(row) > 0:
             # print header
             result = Strings().TODAY_HEADER
