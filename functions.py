@@ -115,19 +115,25 @@ def today(userId):
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(day) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
         cur.execute(qry)
 
-        # print header
-        result = Strings().TODAY_HEADER
+        row = cur.fetchall()
+        if len(row) > 0:
+            # print header
+            result = Strings().TODAY_HEADER
 
-        # arranging query data so it displayed nicely
-        for row in cur.fetchall():
-            result += str(row[1])+" "+str(row[0])+"\n"
-            result += str(row[2])+" - "+str(row[3])+"\n"
-            result += str(row[4])+"\n\n"
+            # arranging query data so it displayed nicely
+            for row in cur.fetchall():
+                result += str(row[1])+" "+str(row[0])+"\n"
+                result += str(row[2])+" - "+str(row[3])+"\n"
+                result += str(row[4])+"\n\n"
 
-        # close connection
-        con.close()
-        # record activity
-        usageLog(row[0][0], 2)
+            # close connection
+            con.close()
+            # record activity
+            usageLog(row[0][0], 2)
+
+        else:
+            result = Strings().TODAY_EMPTY
+            
         return result
 
 
