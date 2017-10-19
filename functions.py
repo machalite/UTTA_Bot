@@ -73,6 +73,8 @@ def register(authCode, userId):
             sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + row[0][0]
             cur.execute(sql)
             result = Strings().REG_SUCCESS
+            # record register activity
+            usageLog(row[0][0], 1)
         else:
             result = Strings().REG_EXPIRED
     else:
@@ -80,7 +82,6 @@ def register(authCode, userId):
         result = Strings().REG_FAILED
     # close connection
     con.close()
-    usageLog(row[0][0], 1)
     return result
 
 
@@ -113,6 +114,7 @@ def today(userId):
 
         # close connection
         con.close()
+        # record activity
         usageLog(row[0][0],2)
         return result
 
@@ -143,5 +145,6 @@ def schedule(userId):
 
         # close connection
         con.close()
+        # record activity
         usageLog(row[0][0],3)
         return result
