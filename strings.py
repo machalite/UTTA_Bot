@@ -7,7 +7,7 @@ class Strings:
         self.SCHEDULE = "!schedule"
         self.NEXT = "!next"
         self.WHERE = "!where"
-        self.CHECK = "!check"j
+        self.CHECK = "!check"
         self.CHANGES = "!changes"
         self.TRANSLATE = "!translate"
         self.SEARCH = "!search"
