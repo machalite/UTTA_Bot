@@ -1,4 +1,4 @@
-class Strings:;
+class Strings:
     def __init__(self):
         # command keywords
         self.REGISTER = "!register"

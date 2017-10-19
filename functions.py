@@ -113,7 +113,7 @@ def today(userId):
 
         # close connection
         con.close()
-        usageLog()
+        usageLog(row[0][0],2)
         return result
 
 
@@ -143,4 +143,5 @@ def schedule(userId):
 
         # close connection
         con.close()
+        usageLog(row[0][0],3)
         return result
