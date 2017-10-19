@@ -35,10 +35,22 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print("event.reply_token:", event.reply_token)
-    print("event.message.text:", event.message.text)
+    # get user profile
+    profile = line_bot_api.get_profile(event.source.user_id)
+    # Contains user input message
+    inputMsg = str(event.message.text)
+    # Print user input on console
+    print(Strings().CONS_INPUT, event.message.text)
     if event.message.text == "coba":
         content = "Berhasil !!"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
+    if inputMsg.startswith(Strings().REGISTER):
+        authCode = inputMsg[len(Strings().register) + 1:end]
+        print(authCode)
+        content = register(authCode, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
@@ -62,7 +74,6 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 'OK'
     if event.message.text == Strings().SCHEDULE:
-        profile = line_bot_api.get_profile(event.source.user_id)
         content = schedule(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,

@@ -102,15 +102,48 @@ def schedule(userId):
     else:
         # Get student corresponding to the submitted line id
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
-
         cur.execute(qry)
         # print header
         result = Strings().SCHEDULE_HEADER
 
         # arranging query so it displayed nicely
         for row in cur.fetchall():
-            result += str(row[1])+" "+str(row[0])+" "+str(row[3])+"\n"
+            result += str(row[1])+" "+str(row[0])+" "+str(row[2])+"\n"
 
         # close connection
         con.close()
         return result
+
+
+def register(authCode, userId):
+    # create DB connection
+    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
+                          Settings().DBpass, Settings().DBname)
+
+    # create cursor for query data execution
+    cur = con.cursor()
+
+    # search for matching authentication code
+    qry = "SELECT id, name, lineid FROM student WHERE authcode='" + authCode + "'"
+    cur.execute(qry)
+    # contain fetch result in array variable
+    row = cur.fetchall()
+
+    # check if there is a record with matching authcode
+    if len(row) == 0:
+        # no matching lineid
+        result = Strings().REG_INVALID
+    elif len(row) == 1:
+        # there is 1 match, check if lineid is empty (not registered before)
+        if row[0][2] == "":
+            sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + row[0][0]
+            cur.execute(sql)
+            result = Strings().REG_SUCCESS
+        else:
+            result = Strings().REG_EXPIRED
+    else:
+        # other errors
+        result = Strings().REG_FAILED
+    # close connection
+    con.close()
+    return result

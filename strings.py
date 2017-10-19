@@ -22,6 +22,7 @@ class Strings:
         # long strings
         self.ABOUT = "UNIVERSITY TIME TABLE BOT\nCreated by Jonathan"
         # messages on !register
+        self.REG_SUCCESS = "Sucessfully registered!"
         self.UNREG = "You are not registered. Please register using !register."
         self.REG_INVALID = "Invalid PIN! Please try again or contact administrator for more information."
         self.REG_EXPIRED = "PIN already used! Please try again or contact administrator for more information."
@@ -34,3 +35,12 @@ class Strings:
         self.ROOM_EMPTY = "There is no class for in this room for today"
         # messages on !schedule
         self.SCHEDULE_HEADER = "Weekly schedule:\n"
+        self.SCHEDULE_MON = "Monday:"
+        self.SCHEDULE_TUE = "Tuesday:"
+        self.SCHEDULE_WED = "Wednesday:"
+        self.SCHEDULE_THU = "Thursday:"
+        self.SCHEDULE_FRI = "Friday:"
+        self.SCHEDULE_SAT = "Saturday:"
+        self.SCHEDULE_SUN = "Sunday:"
+        # console messages
+        self.CONS_INPUT = "User input message:"
