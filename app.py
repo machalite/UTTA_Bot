@@ -41,7 +41,8 @@ def handle_message(event):
     inputMsg = str(event.message.text)
     # Print user input on console
     print(Strings().CONS_INPUT, event.message.text)
-    if event.message.text == "coba":
+
+    if inputMsg == "coba":
         content = "Berhasil !!"
         line_bot_api.reply_message(
             event.reply_token,
@@ -61,19 +62,13 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if event.message.text == "!user":
-        content = selUser()
+    if inputMsg == Strings().TODAY:
+        content = today(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if event.message.text == "!today":
-        content = today()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
-    if event.message.text == Strings().SCHEDULE:
+    if inputMsg == Strings().SCHEDULE:
         content = schedule(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,

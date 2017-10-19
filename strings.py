@@ -1,4 +1,4 @@
-class Strings:
+class Strings:;
     def __init__(self):
         # command keywords
         self.REGISTER = "!register"
@@ -7,7 +7,7 @@ class Strings:
         self.SCHEDULE = "!schedule"
         self.NEXT = "!next"
         self.WHERE = "!where"
-        self.CHECK = "!check"
+        self.CHECK = "!check"j
         self.CHANGES = "!changes"
         self.TRANSLATE = "!translate"
         self.SEARCH = "!search"
