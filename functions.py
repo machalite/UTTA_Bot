@@ -1,10 +1,9 @@
 #!/usr/bin/python
 from settings import *
 from strings import *
+from datetime import datetime
 
 import MySQLdb
-import datetime
-
 
 def connectDb():
     # create DB connection
@@ -45,8 +44,8 @@ def usageLog(studentId, activityId):
     con = connectDb()
     cur = con.cursor()
 
-    now = datetime.datetime.now()
-    qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + str(now) + "')"
+    now = str(datetime.now())
+    qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
     cur.execute(qry)
     con.close()
 
