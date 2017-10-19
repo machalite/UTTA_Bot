@@ -14,12 +14,9 @@ def connectDb():
 
 def selUser():
     # create DB connection
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
+    con = connectDb()
     cur = con.cursor()
-    # Use all the SQL you like
+
     cur.execute("SELECT * FROM faculty")
 
     # print all the first cell of all the rows
@@ -35,10 +32,7 @@ def selUser():
 
 def today():
     # create DB connection
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
+    con = connectDb()
     cur = con.cursor()
 
     # fetch today's classes
@@ -61,10 +55,7 @@ def today():
 
 def verify(userId):
     # create DB connection
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
+    con = connectDb()
     cur = con.cursor()
 
     # Get student corresponding to the submitted line id
@@ -91,11 +82,9 @@ def verify(userId):
 
 def schedule(userId):
     # create DB connection
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
+    con = connectDb()
     cur = con.cursor()
+
     # contain returned studentId
     studentId = verify(userId)
     print(studentId)
@@ -123,9 +112,10 @@ def schedule(userId):
 
 
 def register(authCode, userId):
+    # create DB connection
     con = connectDb()
     cur = con.cursor()
-    
+
     # search for matching authentication code
     qry = "SELECT id, name, lineid FROM student WHERE authcode='" + authCode + "'"
     cur.execute(qry)
