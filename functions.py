@@ -46,7 +46,9 @@ def usageLog(studentId, activityId):
     cur = con.cursor()
 
     now = str(datetime.now())
+    print(now)
     qry = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
+    print(qry)
     cur.execute(qry)
     con.close()
 
@@ -76,6 +78,9 @@ def register(authCode, userId):
             cur.execute(sql)
             result = Strings().REG_SUCCESS
             print("success update")
+
+            # close connection
+            con.close()
             # record register activity
             usageLog(row[0][0], 1)
         else:
@@ -84,8 +89,6 @@ def register(authCode, userId):
     else:
         # other errors
         result = Strings().REG_FAILED
-    # close connection
-    con.close()
     return result
 
 
