@@ -50,7 +50,6 @@ def handle_message(event):
     if inputMsg.startswith(Strings().REGISTER):
         index = len(Strings().REGISTER) + 1
         authCode = inputMsg[index:]
-        print(authCode)
         content = register(authCode, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,

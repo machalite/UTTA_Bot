@@ -5,6 +5,16 @@ from strings import *
 import MySQLdb
 
 
+def connectDb():
+    # create DB connection
+    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
+                          Settings().DBpass, Settings().DBname)
+
+    # create cursor for query data execution
+    cur = con.cursor()
+    return cur
+
+
 def selUser():
     # create DB connection
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
@@ -23,7 +33,7 @@ def selUser():
 
     # close connection
     con.close()
-    return content
+    return result
 
 
 def today():
@@ -116,13 +126,7 @@ def schedule(userId):
 
 
 def register(authCode, userId):
-    # create DB connection
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
-
-    # create cursor for query data execution
-    cur = con.cursor()
-
+    cur = connectDb()
     # search for matching authentication code
     qry = "SELECT id, name, lineid FROM student WHERE authcode='" + authCode + "'"
     cur.execute(qry)
