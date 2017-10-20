@@ -58,8 +58,8 @@ def handle_message(event):
         return 'OK'
     if inputMsg.startswith(Strings().CHECKROOM):
         index = len(Strings().CHECKROOM) + 1
-        roomId = inputMsg[index:]
-        content = checkroom(roomId, profile.user_id)
+        roomInput = inputMsg[index:]
+        content = checkroom(roomInput, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))

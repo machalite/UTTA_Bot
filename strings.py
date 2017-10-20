@@ -34,7 +34,7 @@ class Strings:
         # messages on !checkroom
         self.ROOM_HEADER = "Schedule for room "
         self.ROOM_UNREG = "Room not found. Please try again"
-        self.ROOM_EMPTY = "There is no class for in this room for today"
+        self.ROOM_EMPTY = "There is no class in this room for today"
         # messages on !schedule
         self.SCHEDULE_HEADER = "Weekly schedule:\n"
         self.SCHEDULE_MON = "Monday:"

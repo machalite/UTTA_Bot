@@ -147,31 +147,42 @@ def today(userId):
         return result
 
 
-def checkroom(roomId, userId):
+def checkroom(roomInput, userId):
     # create DB connection
     con = connectDb()
     cur = con.cursor()
-    # Get student corresponding to the submitted line id
-    qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer FROM room r, course cr, class c, lecturer l WHERE c.room=r.id AND c.course=cr.id AND cr.lecturer=l.id AND r.id LIKE '%" + roomId + "%' AND c.active=1 ORDER BY c.startclass"
+
+    # check validity of submitted roomcode/roomname
+    qry = "SELECT id FROM room WHERE name='" + roomInput + "' OR code='" + roomInput + "' AND active=1"
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
-    print(data)
-    print(len(data))
     if len(data) > 0:
-        # print header
-        result = Strings().ROOM_HEADER
-        # arranging query data so it displayed nicely
-        for row in data:
-            result += str(row[1]) + " " + str(row[0]) + "\n"
-            result += str(row[2]) + " - " + str(row[3]) + "\n"
-            result += str(row[4]) + "\n\n"
-        # close connection
-        con.close()
-        # record activity
-        # usageLog(studentId, 2)
+        roomId = data[0][0]
+        print(roomId)
+
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer FROM room r, course cr, class c, lecturer l WHERE c.room=r.id AND c.course=cr.id AND cr.lecturer=l.id AND r.id=" + str(roomId) + " AND c.active=1 ORDER BY c.startclass"
+        cur.execute(qry)
+        # contain fetch result in array variable
+        data = cur.fetchall()
+        print(data)
+        print(len(data))
+        if len(data) > 0:
+            # print header
+            result = Strings().ROOM_HEADER
+            # arranging query data so it displayed nicely
+            for row in data:
+                result += str(row[1]) + " " + str(row[0]) + "\n"
+                result += str(row[2]) + " - " + str(row[3]) + "\n"
+                result += str(row[4]) + "\n\n"
+            # close connection
+            con.close()
+            # record activity
+            # usageLog(studentId, 2)
+        else:
+            result = Strings().ROOM_EMPTY
     else:
-        result = Strings().ROOM_EMPTY
+        result = Strings().ROOM_UNREG
     return result
 
 
