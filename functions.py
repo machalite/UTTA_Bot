@@ -53,38 +53,50 @@ def usageLog(studentId, activityId):
 
 
 def register(authCode, userId):
-    # create DB connection
-    con = connectDb()
-    cur = con.cursor()
+    # check if alreadey registered
+    studentId = verify(userId)
+    if studentId == 0:
+        # student have not registered yet
 
-    # search for matching authentication code
-    qry = "SELECT id, lineid FROM student WHERE authcode=" + authCode + " AND active=1"
-    cur.execute(qry)
-    # contain fetch result in array variable
-    row = cur.fetchall()
+        con = connectDb()
+        cur = con.cursor()
 
-    # check if there is a record with matching authcode
-    if len(row) == 0:
-        # no matching lineid
-        result = Strings().REG_INVALID
-    elif len(row) == 1:
-        # there is 1 match, check if lineid is empty (not registered before)
-        if row[0][1] == "":
-            # add user lineid to database
-            sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
-            cur.execute(sql)
-            con.commit()
-            # close connection
-            con.close()
+        # search for matching authentication code
+        qry = "SELECT id, lineid FROM student WHERE authcode=" + authCode + " AND active=1"
+        cur.execute(qry)
+        # contain fetch result in array variable
+        row = cur.fetchall()
 
-            result = Strings().REG_SUCCESS
-            # record register activity
-            usageLog(row[0][0], 1)
+        # check if there is a record with matching authcode
+        if len(row) == 0:
+            # no matching lineid
+            result = Strings().REG_INVALID
+        elif len(row) == 1:
+            # there is 1 match, check if lineid is empty (not registered before)
+            if row[0][1] == "":
+                # add user lineid to database
+                sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
+                cur.execute(sql)
+                con.commit()
+                # close connection
+                con.close()
+
+                result = Strings().REG_SUCCESS
+                # record register activity
+                usageLog(row[0][0], 1)
+            else:
+                result = Strings().REG_EXPIRED
         else:
-            result = Strings().REG_EXPIRED
+            # other errors
+            result = Strings().REG_FAILED
+    # duplicate student or other errors
+    elif studentId == 1:
+        # foud 1 matching line id, already registered
+        return Strings().REG_ALREADY
     else:
-        # other errors
-        result = Strings().REG_FAILED
+        # exception
+        return Strings().ERR_FATAL
+
     return result
 
 

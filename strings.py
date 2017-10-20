@@ -23,9 +23,10 @@ class Strings:
         self.ABOUT = "UNIVERSITY TIME TABLE BOT\nCreated by Jonathan"
         # messages on !register
         self.REG_SUCCESS = "Sucessfully registered!"
+        self.REG_ALREADEY = "You are already registered"
         self.UNREG = "You are not registered. Please register using !register."
-        self.REG_INVALID = "Invalid PIN! Please try again or contact administrator for more information."
-        self.REG_EXPIRED = "You are already registered"
+        self.REG_INVALID = "Invalid code! Please try again or contact administrator for more information."
+        self.REG_EXPIRED = "Expired authentication code! Please contact administrator."
         self.REG_FAILED = "Registration failed! Please contact administrator for assistance"
         # messages on !today
         self.TODAY_EMPTY = "There is no class for today"
