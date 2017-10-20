@@ -42,22 +42,10 @@ def handle_message(event):
     # Print user input on console
     print(Strings().CONS_INPUT, event.message.text)
 
-    if inputMsg == "coba":
-        content = "Berhasil !!"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
     if inputMsg.startswith(Strings().REGISTER):
         index = len(Strings().REGISTER) + 1
         authCode = inputMsg[index:]
         content = register(authCode, profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
-    if event.message.text == "!about":
-        content = Strings().ABOUT
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
@@ -68,8 +56,28 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
+    if inputMsg.startswith(Strings().CHECKROOM):
+        index = len(Strings().CHECKROOM) + 1
+        roomId = inputMsg[index:]
+        content = register(roomId, profile.user_id)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
     if inputMsg == Strings().SCHEDULE:
         content = schedule(profile.user_id)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
+    if event.message.text == "!about":
+        content = Strings().ABOUT
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
+    if inputMsg == "coba":
+        content = "Berhasil !!"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))

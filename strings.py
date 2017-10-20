@@ -3,7 +3,7 @@ class Strings:
         # command keywords
         self.REGISTER = "!register"
         self.TODAY = "!today"
-        self.ROOMCHECK = "!roomcheck"
+        self.CHECKROOM = "!checkroom"
         self.SCHEDULE = "!schedule"
         self.NEXT = "!next"
         self.WHERE = "!where"
@@ -31,7 +31,8 @@ class Strings:
         # messages on !today
         self.TODAY_EMPTY = "There is no class for today"
         self.TODAY_HEADER = "Today's schedule:\n"
-        # messages on !roomcheck
+        # messages on !checkroom
+        self.ROOM_HEADER = "Schedule for room "
         self.ROOM_UNREG = "Room not found. Please try again"
         self.ROOM_EMPTY = "There is no class for in this room for today"
         # messages on !schedule
