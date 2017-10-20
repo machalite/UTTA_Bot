@@ -159,7 +159,6 @@ def checkroom(roomInput, userId):
     data = cur.fetchall()
     if len(data) > 0:
         roomId = data[0][0]
-        print(roomId)
 
         # determine which day is today
         # 0=monday, 6=sunday
@@ -171,6 +170,7 @@ def checkroom(roomInput, userId):
         else:
             today += 1
 
+        print(today)
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, l.name AS lecturer FROM room r, course cr, class c, lecturer l WHERE c.room=r.id AND c.course=cr.id AND cr.lecturer=l.id AND r.id=" + str(roomId) + " AND c.day=" + str(today) + " AND c.active=1 ORDER BY c.startclass"
         cur.execute(qry)
         # contain fetch result in array variable
@@ -179,7 +179,7 @@ def checkroom(roomInput, userId):
         print(len(data))
         if len(data) > 0:
             # print header
-            result = Strings().ROOM_HEADER + str(data[0][4])  # print day
+            result = Strings().ROOM_HEADER + str(data[0][4]) + "\n"  # print day
             # arranging query data so it displayed nicely
             for row in data:
                 result += str(row[1]) + " " + str(row[0]) + "\n"
