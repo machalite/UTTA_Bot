@@ -59,7 +59,7 @@ def handle_message(event):
     if inputMsg.startswith(Strings().CHECKROOM):
         index = len(Strings().CHECKROOM) + 1
         roomId = inputMsg[index:]
-        content = register(roomId, profile.user_id)
+        content = checkroom(roomId, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
