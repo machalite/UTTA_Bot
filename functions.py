@@ -83,7 +83,7 @@ def register(authCode, userId):
 
                 result = Strings().REG_SUCCESS
                 # record register activity
-                usageLog(row[0][0], 1)
+                usageLog(studentId, 1)
             else:
                 result = Strings().REG_EXPIRED
         else:
@@ -104,13 +104,13 @@ def today(userId):
     studentId = verify(userId)
     # determine which day is today
     # 0=monday, 6=sunday
-    day = datetime.now().weekday()
+    today = datetime.now().weekday()
 
     # sync day variable so 0=sunday and 5=saturday
-    if day == 6:
-        day = 0
+    if today == 6:
+        today = 0
     else:
-        day += 1
+        today += 1
 
     # student not registered
     if studentId == 0:
@@ -124,7 +124,7 @@ def today(userId):
         cur = con.cursor()
 
         # fetch today's classes
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(day) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
         print(qry)
         cur.execute(qry)
 
