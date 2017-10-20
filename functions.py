@@ -179,7 +179,7 @@ def checkroom(roomInput, userId):
         print(len(data))
         if len(data) > 0:
             # print header
-            result = Strings().ROOM_HEADER + str(data[0][6]) + "\n"  # print day
+            result = Strings().ROOM_HEADER + str(data[0][6]) + "\n\n"  # print room name
             # arranging query data so it displayed nicely
             for row in data:
                 result += str(row[1]) + " " + str(row[0]) + "\n"

@@ -32,7 +32,7 @@ class Strings:
         self.TODAY_EMPTY = "There is no class for today"
         self.TODAY_HEADER = "Today's schedule:\n"
         # messages on !checkroom
-        self.ROOM_HEADER = "Schedule for room "
+        self.ROOM_HEADER = "Today's schedule for "
         self.ROOM_UNREG = "Room not found. Please try again"
         self.ROOM_EMPTY = "There is no class in this room for today"
         # messages on !schedule
