@@ -176,5 +176,5 @@ def schedule(userId):
         # close connection
         con.close()
         # record activity
-        usageLog(row[0][0],3)
+        usageLog(studentId, 3)
         return result
