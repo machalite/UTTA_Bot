@@ -90,12 +90,12 @@ def register(authCode, userId):
             # other errors
             result = Strings().REG_FAILED
     # duplicate student or other errors
-    elif studentId == 1:
-        # foud 1 matching line id, already registered
-        return Strings().REG_ALREADY
-    else:
-        # exception
+    elif studentId == -1:
+        # exception error
         return Strings().ERR_FATAL
+    else:
+        # found matching student, already registered
+        return Strings().REG_ALREADY
 
     return result
 
