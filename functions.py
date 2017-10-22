@@ -4,6 +4,7 @@ from strings import *
 from datetime import datetime
 
 import MySQLdb
+import pytz
 
 
 def connectDb():
@@ -210,6 +211,7 @@ def schedule(userId):
         # create DB connection
         con = connectDb()
         cur = con.cursor()
+
         # Get student corresponding to the submitted line id
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
         cur.execute(qry)
@@ -218,10 +220,50 @@ def schedule(userId):
 
         # arranging query so it displayed nicely
         for row in cur.fetchall():
-            result += str(row[1])+" "+str(row[0])+" "+str(row[2])+"\n"
+            result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
 
         # close connection
         con.close()
         # record activity
         usageLog(studentId, 3)
+        return result
+
+
+def next(userId):
+    # contain returned studentId
+    studentId = verify(userId)
+
+    # student not registered
+    if studentId == 0:
+        return Strings().UNREG
+    # duplicate student or other errors
+    elif studentId == -1:
+        return Strings().ERR_FATAL
+    else:
+        # create DB connection
+        con = connectDb()
+        cur = con.cursor()
+
+        # get time with timezone
+        tz = pytz.timezone(Settings().TimeZone)
+        now = datetime.now(tz)
+        print(now)
+
+        # Get next class
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<" + now + " AND c.endclass>" + now + " AND c.active=1 AND t.student=" + studentID + " ORDER BY c.startclass LIMIT 1"
+        cur.execute(qry)
+        # print header
+        result = Strings().NEXT_HEADER
+
+        # arranging query so it displayed nicely
+        for row in cur.fetchall():
+            result += str(row["code"]) + " " + str(row["name"]) + "\n"
+            result += str(row["startclass"]) + " " + str(row["endclass"]) + "\n"
+            result += str(row["room"]) + "\n"
+            result += str(row["lecturer"]) + "\n"
+
+        # close connection
+        con.close()
+        # record activity
+        usageLog(studentId, 4)
         return result

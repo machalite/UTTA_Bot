@@ -44,5 +44,7 @@ class Strings:
         self.SCHEDULE_FRI = "Friday:"
         self.SCHEDULE_SAT = "Saturday:"
         self.SCHEDULE_SUN = "Sunday:"
+        # messages on !next
+        self.NEXT_HEADER = "Next class:\n"
         # console messages
         self.CONS_INPUT = "User input message:"
