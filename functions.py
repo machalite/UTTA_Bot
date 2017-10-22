@@ -260,7 +260,7 @@ def next(userId):
             today += 1
 
         # Get next class
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<" + now + "AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + studentId + " ORDER BY c.startclass LIMIT 1"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<" + now + " AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + studentId + " ORDER BY c.startclass LIMIT 1"
         cur.execute(qry)
         # print header
         result = Strings().NEXT_HEADER
