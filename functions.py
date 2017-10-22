@@ -46,8 +46,11 @@ def usageLog(studentId, activityId):
     con = connectDb()
     cur = con.cursor()
 
-    now = str(datetime.now())
-    sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + now + "')"
+    # get time with timezone
+    tz = pytz.timezone(Settings().TimeZone)
+    now = datetime.now(tz)
+
+    sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + str(now) + "')"
     cur.execute(sql)
     con.commit()
     con.close()
@@ -103,9 +106,13 @@ def register(authCode, userId):
 
 def today(userId):
     studentId = verify(userId)
+
+    # get timezone
+    tz = pytz.timezone(Settings().TimeZone)
+
     # determine which day is today
     # 0=monday, 6=sunday
-    today = datetime.now().weekday()
+    today = datetime.now(tz).weekday()
 
     # sync day variable so 0=sunday and 5=saturday
     if today == 6:
@@ -161,9 +168,12 @@ def checkroom(roomInput, userId):
     if len(data) > 0:
         roomId = data[0][0]
 
+        # get time with timezone
+        tz = pytz.timezone(Settings().TimeZone)
+
         # determine which day is today
         # 0=monday, 6=sunday
-        today = datetime.now().weekday()
+        today = datetime.now(tz).weekday()
 
         # sync day variable so 0=sunday and 5=saturday
         if today == 6:
@@ -247,7 +257,6 @@ def next(userId):
         # get time with timezone
         tz = pytz.timezone(Settings().TimeZone)
         now = datetime.now(tz)
-        print(now)
 
         # determine which day is today
         # 0=monday, 6=sunday

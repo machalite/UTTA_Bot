@@ -46,6 +46,6 @@ class Strings:
         self.SCHEDULE_SUN = "Sunday:"
         # messages on !next
         self.NEXT_HEADER = "Next class:\n"
-        self.NEXT_NOCLASS = "Yay! Done for today!"
+        self.NEXT_NOCLASS = "No more class for today!"
         # console messages
         self.CONS_INPUT = "User input message:"
