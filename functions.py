@@ -249,18 +249,32 @@ def next(userId):
         now = datetime.now(tz)
         print(now)
 
+        # determine which day is today
+        # 0=monday, 6=sunday
+        today = datetime.now(tz).weekday()
+
+        # sync day variable so 0=sunday and 5=saturday
+        if today == 6:
+            today = 0
+        else:
+            today += 1
+
         # Get next class
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<" + now + " AND c.endclass>" + now + " AND c.active=1 AND t.student=" + studentID + " ORDER BY c.startclass LIMIT 1"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<" + now + "AND c.day=" + today + " AND c.active=1 AND t.student=" + studentID + " ORDER BY c.startclass LIMIT 1"
         cur.execute(qry)
         # print header
         result = Strings().NEXT_HEADER
 
         # arranging query so it displayed nicely
-        for row in cur.fetchall():
+        data = cur.fetchall()
+        if len(data) > 0:
+            for row in data:
             result += str(row["code"]) + " " + str(row["name"]) + "\n"
             result += str(row["startclass"]) + " " + str(row["endclass"]) + "\n"
             result += str(row["room"]) + "\n"
             result += str(row["lecturer"]) + "\n"
+        else:
+            result = Strings().NEXT_NOCLASS
 
         # close connection
         con.close()
