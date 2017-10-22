@@ -246,7 +246,7 @@ def next(userId):
 
         # get time with timezone
         tz = pytz.timezone(Settings().TimeZone)
-        now = datetime.now(tz)
+        now = str(datetime.now(tz))
         print(now)
 
         # determine which day is today
