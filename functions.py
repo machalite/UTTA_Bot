@@ -57,7 +57,7 @@ def usageLog(studentId, activityId):
 
 
 def register(authCode, userId):
-    # check if alreadey registered
+    # check if already registered
     studentId = verify(userId)
     if studentId == 0:
         # student have not registered yet
@@ -105,6 +105,7 @@ def register(authCode, userId):
 
 
 def today(userId):
+    # check if already registered
     studentId = verify(userId)
 
     # get timezone
@@ -208,7 +209,7 @@ def checkroom(roomInput, userId):
 
 
 def schedule(userId):
-    # contain returned studentId
+    # check if already registered
     studentId = verify(userId)
 
     # student not registered
@@ -226,10 +227,30 @@ def schedule(userId):
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
         cur.execute(qry)
         # print header
-        result = Strings().SCHEDULE_HEADER
+        result = Strings().SCHEDULE_HEADER + "\n"
 
         # arranging query so it displayed nicely
+        curDay = 0
         for row in cur.fetchall():
+            if row[3] == 1:
+                txtDay = Strings().SCHEDULE_MON
+            elif row[3] == 2:
+                txtDay = Strings().SCHEDULE_TUE
+            elif row[3] == 3:
+                txtDay = Strings().SCHEDULE_WED
+            elif row[3] == 4:
+                txtDay = Strings().SCHEDULE_THU
+            elif row[3] == 5:
+                txtDay = Strings().SCHEDULE_FRI
+            elif row[3] == 6:
+                txtDay = Strings().SCHEDULE_SAT
+            else:
+                txtDay = Strings().SCHEDULE_SUN
+
+            if row[3] != curDay:
+                result += txtDay + "\n"
+                curDay == row[3]
+
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
 
         # close connection
@@ -240,7 +261,7 @@ def schedule(userId):
 
 
 def next(userId):
-    # contain returned studentId
+    # check if already registered
     studentId = verify(userId)
 
     # student not registered
@@ -272,14 +293,14 @@ def next(userId):
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<'" + str(now) + "' AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass LIMIT 1"
         cur.execute(qry)
         # print header
-        result = Strings().NEXT_HEADER
+        result = Strings().NEXT_HEADER + "\n"
 
         # arranging query so it displayed nicely
         data = cur.fetchall()
         if len(data) > 0:
             for row in data:
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(row[2]) + " " + str(row[3]) + "\n"
+                result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[5]) + "\n"
                 result += str(row[4]) + "\n"
         else:

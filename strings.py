@@ -36,7 +36,7 @@ class Strings:
         self.ROOM_UNREG = "Room not found. Please try again"
         self.ROOM_EMPTY = "There is no class in this room for today"
         # messages on !schedule
-        self.SCHEDULE_HEADER = "Weekly schedule:\n"
+        self.SCHEDULE_HEADER = "Weekly schedule:"
         self.SCHEDULE_MON = "Monday:"
         self.SCHEDULE_TUE = "Tuesday:"
         self.SCHEDULE_WED = "Wednesday:"
@@ -45,7 +45,7 @@ class Strings:
         self.SCHEDULE_SAT = "Saturday:"
         self.SCHEDULE_SUN = "Sunday:"
         # messages on !next
-        self.NEXT_HEADER = "Next class:\n"
+        self.NEXT_HEADER = "Next class:"
         self.NEXT_NOCLASS = "No more class for today!"
         # console messages
         self.CONS_INPUT = "User input message:"
