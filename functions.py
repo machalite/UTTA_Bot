@@ -269,10 +269,10 @@ def next(userId):
         data = cur.fetchall()
         if len(data) > 0:
             for row in data:
-            result += str(row["code"]) + " " + str(row["name"]) + "\n"
-            result += str(row["startclass"]) + " " + str(row["endclass"]) + "\n"
-            result += str(row["room"]) + "\n"
-            result += str(row["lecturer"]) + "\n"
+                result += str(row["code"]) + " " + str(row["name"]) + "\n"
+                result += str(row["startclass"]) + " " + str(row["endclass"]) + "\n"
+                result += str(row["room"]) + "\n"
+                result += str(row["lecturer"]) + "\n"
         else:
             result = Strings().NEXT_NOCLASS
 
