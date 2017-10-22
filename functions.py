@@ -248,8 +248,8 @@ def schedule(userId):
                 txtDay = Strings().SCHEDULE_SUN
 
             if row[3] != curDay:
-                result += txtDay + "\n"
-                curDay == row[3]
+                result += "\n" + txtDay + "\n"
+                curDay = row[3]
 
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
 
