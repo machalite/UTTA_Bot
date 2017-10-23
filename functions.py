@@ -323,6 +323,7 @@ def where(roomInput, userId):
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
+    result = ""
     if len(data) > 0:
         for row in data:
             result += str(row[1]) + " " + str(row[2]) + "\n"
