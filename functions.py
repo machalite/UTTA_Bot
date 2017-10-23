@@ -162,7 +162,7 @@ def checkroom(roomInput, userId):
     cur = con.cursor()
 
     # check validity of submitted roomcode/roomname
-    qry = "SELECT id FROM room WHERE name LIKE '" + roomInput + "' OR code='" + roomInput + "' AND active=1"
+    qry = "SELECT id FROM room WHERE name LIKE '%" + roomInput + "%' OR code='" + roomInput + "' AND active=1"
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
@@ -319,7 +319,7 @@ def where(roomInput, userId):
     cur = con.cursor()
 
     # check validity of submitted roomcode/roomname
-    qry = "SELECT r.floor, r.code, r.name, r.description, b.name AS building, b.description AS buildingDesc FROM building b, room r WHERE r.building=b.id AND r.name LIKE '" + roomInput +"' OR r.code='" + roomInput + "' AND r.active=1"
+    qry = "SELECT r.floor, r.code, r.name, r.description, b.name AS building, b.description AS buildingDesc FROM building b, room r WHERE r.building=b.id AND r.id=(SELECT id FROM room WHERE name LIKE '%" + roomInput + "%' OR code=" + roomInput + " AND active=1)"
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
