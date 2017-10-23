@@ -47,5 +47,7 @@ class Strings:
         # messages on !next
         self.NEXT_HEADER = "Next class:"
         self.NEXT_NOCLASS = "No more class for today!"
+        # messages on !where
+        self.WHERE_FLOOR = "Floor:"
         # console messages
         self.CONS_INPUT = "User input message:"
