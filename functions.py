@@ -435,11 +435,11 @@ def changes(userId):
                 else:
                     txtStatus = Strings().CHANGES_SUPPLEMENTARY
 
-                result += row[1] + " " + row[0] + "\n"  #print course code and name
+                result += str(row[1]) + " " + str(row[0]) + "\n"  #print course code and name
                 result += txtStatus + "\n"
-                result += row[6] + " " + row[3] + " - " + row[4] + "\n"
-                result += row[7] + "\n"
-                result += row[5] + "\n\n"
+                result += str(row[6]) + " " + str(row[3]) + " - " + str(row[4]) + "\n"
+                result += str(row[7]) + "\n"
+                result += str(row[5]) + "\n\n"
         else:
             result = Strings().CHANGES_NOCHANGES
 
