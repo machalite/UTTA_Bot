@@ -350,10 +350,11 @@ def checkcourse(courseInput, userId):
     # contain fetch result in array variable
     data = cur.fetchall()
 
-    # display message header
-    result = data[0][1] + " " + data[0][0] + "\n"  # print course code and name
-    result += data[0][6] + "\n"  # print lecturer name
     if len(data) > 0:
+        # display message header
+        result = data[0][1] + " " + data[0][0] + "\n"  # print course code and name
+        result += data[0][6] + "\n"  # print lecturer name
+
         for row in data:
             # determine day name
             curDay = 0
