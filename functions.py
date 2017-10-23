@@ -397,23 +397,23 @@ def checkcourse(courseInput, userId):
     return result
 
 
-def changes(userId):
-    # check if already registered
-    studentId = verify(userId)
-
-    # student not registered
-    if studentId == 0:
-        return Strings().UNREG
-    # duplicate student or other errors
-    elif studentId == -1:
-        return Strings().ERR_FATAL
-    else:
-        # create DB connection
-        con = connectDb()
-        cur = con.cursor()
-
-        # Get student corresponding to the submitted line id
-        qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" str(studentId) +" AND o.active=1 ORDER BY o.date, o.startclass"
-        cur.execute(qry)
-        # print header
-        result = Strings().SCHEDULE_HEADER + "\n"
+# def changes(userId):
+#     # check if already registered
+#     studentId = verify(userId)
+#
+#     # student not registered
+#     if studentId == 0:
+#         return Strings().UNREG
+#     # duplicate student or other errors
+#     elif studentId == -1:
+#         return Strings().ERR_FATAL
+#     else:
+#         # create DB connection
+#         con = connectDb()
+#         cur = con.cursor()
+#
+#         # Get student corresponding to the submitted line id
+#         qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" + str(studentId) + " AND o.active=1 ORDER BY o.date, o.startclass"
+#         cur.execute(qry)
+#         # print header
+#         result = Strings().SCHEDULE_HEADER + "\n"
