@@ -355,9 +355,9 @@ def checkcourse(courseInput, userId):
         result = data[0][1] + " " + data[0][0] + "\n"  # print course code and name
         result += data[0][6] + "\n"  # print lecturer name
 
+        curDay = 0
         for row in data:
             # determine day name
-            curDay = 0
             if row[4] == 1:
                 txtDay = Strings().SCHEDULE_MON
             elif row[4] == 2:
