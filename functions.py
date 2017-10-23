@@ -358,29 +358,28 @@ def checkcourse(courseInput, userId):
         for row in data:
             # determine day name
             curDay = 0
-            for row in cur.fetchall():
-                if row[4] == 1:
-                    txtDay = Strings().SCHEDULE_MON
-                elif row[4] == 2:
-                    txtDay = Strings().SCHEDULE_TUE
-                elif row[4] == 3:
-                    txtDay = Strings().SCHEDULE_WED
-                elif row[4] == 4:
-                    txtDay = Strings().SCHEDULE_THU
-                elif row[4] == 5:
-                    txtDay = Strings().SCHEDULE_FRI
-                elif row[4] == 6:
-                    txtDay = Strings().SCHEDULE_SAT
-                else:
-                    txtDay = Strings().SCHEDULE_SUN
+            if row[4] == 1:
+                txtDay = Strings().SCHEDULE_MON
+            elif row[4] == 2:
+                txtDay = Strings().SCHEDULE_TUE
+            elif row[4] == 3:
+                txtDay = Strings().SCHEDULE_WED
+            elif row[4] == 4:
+                txtDay = Strings().SCHEDULE_THU
+            elif row[4] == 5:
+                txtDay = Strings().SCHEDULE_FRI
+            elif row[4] == 6:
+                txtDay = Strings().SCHEDULE_SAT
+            else:
+                txtDay = Strings().SCHEDULE_SUN
 
-                # print day name
-                if row[4] != curDay:
-                    result += "\n" + txtDay + "\n"
-                    curDay = row[4]
+            # print day name
+            if row[4] != curDay:
+                result += "\n" + txtDay + "\n"
+                curDay = row[4]
 
-                # arranging query result so it displayed nicely
-                result += str(row[2]) + " - " + str(row[3]) + " " + str(row[5]) + "\n"
+            # arranging query result so it displayed nicely
+            result += str(row[2]) + " - " + str(row[3]) + " " + str(row[5]) + "\n"
     else:
         result = Strings().COURSE_INVALID
     # close connection
