@@ -70,8 +70,10 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().NEXT:
-        content = next(profile.user_id)
+    if inputMsg.startswith(Strings().WHERE):
+        index = len(Strings().WHERE) + 1
+        roomInput = inputMsg[index:]
+        content = where(roomInput, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))

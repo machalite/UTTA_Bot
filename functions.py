@@ -311,3 +311,24 @@ def next(userId):
         # record activity
         usageLog(studentId, 4)
         return result
+
+
+def where(roomInput, userId):
+    # create DB connection
+    con = connectDb()
+    cur = con.cursor()
+
+    # check validity of submitted roomcode/roomname
+    qry = "SELECT r.floor, r.code, r.name, r.description, b.name AS building, b.description AS buildingDesc FROM building b, room r WHERE r.building=b.id AND r.name='" + roomInput +"' OR r.code='" + roomInput + "' AND r.active=1"
+    cur.execute(qry)
+    # contain fetch result in array variable
+    data = cur.fetchall()
+    if len(data) > 0:
+        for row in data:
+            result += str(row[1]) + " " + str(row[2]) + "\n"
+            result += str(row[3]) + "\n"
+            result += str(row[4]) + " " + Strings().WHERE_FLOOR + " " + str(row[0]) + "\n"
+            result += str(row[5]) + "\n"
+    else:
+        result = Strings().ROOM_UNREG
+    return result
