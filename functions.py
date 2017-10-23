@@ -350,7 +350,7 @@ def checkcourse(courseInput, userId):
     # contain fetch result in array variable
     data = cur.fetchall()
     if len(data) > 0:
-        roomId = data[0][0]
+        courseId = data[0][0]
         # display message header
         result = data[0][2] + " " + data[0][1] + "\n"  # print course code and name
         result += data[0][3] + "\n"  # print lecturer name
