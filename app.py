@@ -81,7 +81,7 @@ def handle_message(event):
     if inputMsg.startswith(Strings().CHECKCOURSE):
         index = len(Strings().CHECKCOURSE) + 1
         courseInput = inputMsg[index:]
-        content = where(courseInput, profile.user_id)
+        content = checkcourse(courseInput, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
