@@ -51,5 +51,8 @@ class Strings:
         self.WHERE_FLOOR = "Floor:"
         # messages on !checkcourse
         self.COURSE_INVALID = "Course not found. Please try again."
+        self.COURSE_NOCLASS = "There is no class for this course yet."
+        # messages on !changes
+        self.CHANGES_HEADER = "Schedule changes:"
         # console messages
         self.CONS_INPUT = "User input message:"

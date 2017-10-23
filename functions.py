@@ -344,44 +344,76 @@ def checkcourse(courseInput, userId):
     con = connectDb()
     cur = con.cursor()
 
-    # get list of classes
-    qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, r.name AS room, l.name AS lecturer FROM course cr, class c, room r, lecturer l WHERE c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND cr.code='" + courseInput + "' AND cr.active=1 ORDER BY c.day, c.startclass"
+    # check validity of submitted course code
+    qry = "SELECT cr.id, cr.name, cr.code, l.name AS lecturer FROM course cr, lecturer l WHERE cr.lecturer=l.id AND cr.code LIKE '%" + courseInput + "%' AND cr.active=1"
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
-
     if len(data) > 0:
+        roomId = data[0][0]
         # display message header
-        result = data[0][1] + " " + data[0][0] + "\n"  # print course code and name
-        result += data[0][6] + "\n"  # print lecturer name
+        result = data[0][2] + " " + data[0][1] + "\n"  # print course code and name
+        result += data[0][3] + "\n"  # print lecturer name
 
-        curDay = 0
-        for row in data:
-            # determine day name
-            if row[4] == 1:
-                txtDay = Strings().SCHEDULE_MON
-            elif row[4] == 2:
-                txtDay = Strings().SCHEDULE_TUE
-            elif row[4] == 3:
-                txtDay = Strings().SCHEDULE_WED
-            elif row[4] == 4:
-                txtDay = Strings().SCHEDULE_THU
-            elif row[4] == 5:
-                txtDay = Strings().SCHEDULE_FRI
-            elif row[4] == 6:
-                txtDay = Strings().SCHEDULE_SAT
-            else:
-                txtDay = Strings().SCHEDULE_SUN
+        # get list of classes
+        qry = "SELECT c.startclass, c.endclass, c.day, r.name AS room FROM course cr, class c, room r WHERE cr.id=" + str(courseId) + " AND c.course=cr.id AND c.room=r.id AND cr.active=1 ORDER BY c.day, c.startclass"
+        cur.execute(qry)
+        # contain fetch result in array variable
+        data = cur.fetchall()
 
-            # print day name
-            if row[4] != curDay:
-                result += "\n" + txtDay + "\n"
-                curDay = row[4]
+        if len(data) > 0:
+            curDay = 0
+            for row in data:
+                # determine day name
+                if row[2] == 1:
+                    txtDay = Strings().SCHEDULE_MON
+                elif row[2] == 2:
+                    txtDay = Strings().SCHEDULE_TUE
+                elif row[2] == 3:
+                    txtDay = Strings().SCHEDULE_WED
+                elif row[2] == 4:
+                    txtDay = Strings().SCHEDULE_THU
+                elif row[2] == 5:
+                    txtDay = Strings().SCHEDULE_FRI
+                elif row[2] == 6:
+                    txtDay = Strings().SCHEDULE_SAT
+                else:
+                    txtDay = Strings().SCHEDULE_SUN
 
-            # arranging query result so it displayed nicely
-            result += str(row[2]) + " - " + str(row[3]) + " " + str(row[5]) + "\n"
+                # print day name
+                if row[2] != curDay:
+                    result += "\n" + txtDay + "\n"
+                    curDay = row[2]
+
+                # arranging query result so it displayed nicely
+                result += str(row[0]) + " - " + str(row[1]) + " " + str(row[3]) + "\n"
+        else:
+            result = Strings().COURSE_NOCLASS
     else:
         result = Strings().COURSE_INVALID
+
     # close connection
     con.close()
     return result
+
+
+def changes(userId):
+    # check if already registered
+    studentId = verify(userId)
+
+    # student not registered
+    if studentId == 0:
+        return Strings().UNREG
+    # duplicate student or other errors
+    elif studentId == -1:
+        return Strings().ERR_FATAL
+    else:
+        # create DB connection
+        con = connectDb()
+        cur = con.cursor()
+
+        # Get student corresponding to the submitted line id
+        qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" str(studentId) +" AND o.active=1 ORDER BY o.date, o.startclass"
+        cur.execute(qry)
+        # print header
+        result = Strings().SCHEDULE_HEADER + "\n"

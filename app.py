@@ -86,6 +86,12 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
+    if inputMsg == Strings().CHANGES:
+        content = changes(profile.user_id)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 'OK'
     if event.message.text == "!about":
         content = Strings().ABOUT
         line_bot_api.reply_message(
