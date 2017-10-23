@@ -78,8 +78,10 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().WHERE:
-        content = where(profile.user_id)
+    if inputMsg.startswith(Strings().CHECKCOURSE):
+        index = len(Strings().CHECKCOURSE) + 1
+        courseInput = inputMsg[index:]
+        content = where(courseInput, profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))

@@ -7,7 +7,7 @@ class Strings:
         self.SCHEDULE = "!schedule"
         self.NEXT = "!next"
         self.WHERE = "!where"
-        self.CHECK = "!check"
+        self.CHECKCOURSE = "!checkcourse"
         self.CHANGES = "!changes"
         self.TRANSLATE = "!translate"
         self.SEARCH = "!search"
@@ -49,5 +49,7 @@ class Strings:
         self.NEXT_NOCLASS = "No more class for today!"
         # messages on !where
         self.WHERE_FLOOR = "Floor:"
+        # messages on !checkcourse
+        self.COURSE_INVALID = "Course not found. Please try again."
         # console messages
         self.CONS_INPUT = "User input message:"

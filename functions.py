@@ -229,7 +229,7 @@ def schedule(userId):
         # print header
         result = Strings().SCHEDULE_HEADER + "\n"
 
-        # arranging query so it displayed nicely
+        # determine day name
         curDay = 0
         for row in cur.fetchall():
             if row[3] == 1:
@@ -247,10 +247,12 @@ def schedule(userId):
             else:
                 txtDay = Strings().SCHEDULE_SUN
 
+            # print day name
             if row[3] != curDay:
                 result += "\n" + txtDay + "\n"
                 curDay = row[3]
 
+            # arranging query result so it displayed nicely
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
 
         # close connection
@@ -295,7 +297,7 @@ def next(userId):
         # print header
         result = Strings().NEXT_HEADER + "\n"
 
-        # arranging query so it displayed nicely
+        # arranging query result so it displayed nicely
         data = cur.fetchall()
         if len(data) > 0:
             for row in data:
@@ -318,7 +320,7 @@ def where(roomInput, userId):
     con = connectDb()
     cur = con.cursor()
 
-    # check validity of submitted roomcode/roomname
+    # get room information
     qry = "SELECT r.floor, r.code, r.name, r.description, b.name AS building, b.description AS buildingDesc FROM building b, room r WHERE r.building=b.id AND r.id=(SELECT id FROM room WHERE name LIKE '%" + roomInput + "%' OR code='" + roomInput + "' AND active=1)"
     cur.execute(qry)
     # contain fetch result in array variable
@@ -332,6 +334,54 @@ def where(roomInput, userId):
             result += str(row[5]) + "\n\n"
     else:
         result = Strings().ROOM_UNREG
+    # close connection
+    con.close()
+    return result
+
+
+def checkcourse(courseInput, userId):
+    # create DB connection
+    con = connectDb()
+    cur = con.cursor()
+
+    # get list of classes
+    qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, r.name AS room, l.name AS lecturer FROM course cr, class c, room r, lecturer l WHERE c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND cr.code=" + courseInput + " AND cr.active=1 ORDER BY c.day, c.startclass"
+    cur.execute(qry)
+    # contain fetch result in array variable
+    data = cur.fetchall()
+
+    # display message header
+    result = data[0][1] + " " + data[0][0] + "\n"  # print course code and name
+    result += data[0][6] + "\n"  # print lecturer name
+    if len(data) > 0:
+        for row in data:
+            # determine day name
+            curDay = 0
+            for row in cur.fetchall():
+                if row[4] == 1:
+                    txtDay = Strings().SCHEDULE_MON
+                elif row[4] == 2:
+                    txtDay = Strings().SCHEDULE_TUE
+                elif row[4] == 3:
+                    txtDay = Strings().SCHEDULE_WED
+                elif row[4] == 4:
+                    txtDay = Strings().SCHEDULE_THU
+                elif row[4] == 5:
+                    txtDay = Strings().SCHEDULE_FRI
+                elif row[4] == 6:
+                    txtDay = Strings().SCHEDULE_SAT
+                else:
+                    txtDay = Strings().SCHEDULE_SUN
+
+                # print day name
+                if row[4] != curDay:
+                    result += "\n" + txtDay + "\n"
+                    curDay = row[4]
+
+                # arranging query result so it displayed nicely
+                result += str(row[2]) + " - " + str(row[3]) + " " + str(row[5]) + "\n"
+    else:
+        result = Strings().COURSE_INVALID
     # close connection
     con.close()
     return result
