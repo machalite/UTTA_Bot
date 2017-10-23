@@ -345,7 +345,7 @@ def checkcourse(courseInput, userId):
     cur = con.cursor()
 
     # get list of classes
-    qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, r.name AS room, l.name AS lecturer FROM course cr, class c, room r, lecturer l WHERE c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND cr.code=" + courseInput + " AND cr.active=1 ORDER BY c.day, c.startclass"
+    qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, r.name AS room, l.name AS lecturer FROM course cr, class c, room r, lecturer l WHERE c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND cr.code='" + courseInput + "' AND cr.active=1 ORDER BY c.day, c.startclass"
     cur.execute(qry)
     # contain fetch result in array variable
     data = cur.fetchall()
