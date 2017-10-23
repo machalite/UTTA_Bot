@@ -54,5 +54,11 @@ class Strings:
         self.COURSE_NOCLASS = "There is no class for this course yet."
         # messages on !changes
         self.CHANGES_HEADER = "Schedule changes:"
+        self.CHANGES_CANCELLED = "Class cancelled"
+        self.CHANGES_POSTPONED = "Class postponed to:"
+        self.CHANGES_RELOCATED = "Class relocated to:"
+        self.CHANGES_REPLACEMENT = "Replacement class"
+        self.CHANGES_SUPPLEMENTARY = "Supplementary class"
+        self.CHANGES_NOCHANGES = "No schedule changes"
         # console messages
         self.CONS_INPUT = "User input message:"

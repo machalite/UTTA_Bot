@@ -132,7 +132,7 @@ def today(userId):
         con = connectDb()
         cur = con.cursor()
 
-        # fetch today's classes
+        # get today's classes
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, r.name AS building FROM takencourse t, course cr, class c, room r WHERE t.course=cr.id AND c.course=cr.id AND c.room=r.id AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass"
         print(qry)
         cur.execute(qry)
@@ -182,13 +182,11 @@ def checkroom(roomInput, userId):
         else:
             today += 1
 
-        print(today)
+        # get classes for submitted room id
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, c.day, l.name AS lecturer, r.name AS room FROM room r, course cr, class c, lecturer l WHERE c.room=r.id AND c.course=cr.id AND cr.lecturer=l.id AND r.id=" + str(roomId) + " AND c.day=" + str(today) + " AND c.active=1 ORDER BY c.startclass"
         cur.execute(qry)
         # contain fetch result in array variable
         data = cur.fetchall()
-        print(data)
-        print(len(data))
         if len(data) > 0:
             # print header
             result = Strings().ROOM_HEADER + str(data[0][6]) + "\n\n"  # print room name
@@ -223,7 +221,7 @@ def schedule(userId):
         con = connectDb()
         cur = con.cursor()
 
-        # Get student corresponding to the submitted line id
+        # Get weekly schedule
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
         cur.execute(qry)
         # print header
@@ -397,23 +395,54 @@ def checkcourse(courseInput, userId):
     return result
 
 
-# def changes(userId):
-#     # check if already registered
-#     studentId = verify(userId)
-#
-#     # student not registered
-#     if studentId == 0:
-#         return Strings().UNREG
-#     # duplicate student or other errors
-#     elif studentId == -1:
-#         return Strings().ERR_FATAL
-#     else:
-#         # create DB connection
-#         con = connectDb()
-#         cur = con.cursor()
-#
-#         # Get student corresponding to the submitted line id
-#         qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" + str(studentId) + " AND o.active=1 ORDER BY o.date, o.startclass"
-#         cur.execute(qry)
-#         # print header
-#         result = Strings().SCHEDULE_HEADER + "\n"
+def changes(userId):
+    # check if already registered
+    studentId = verify(userId)
+
+    # student not registered
+    if studentId == 0:
+        return Strings().UNREG
+    # duplicate student or other errors
+    elif studentId == -1:
+        return Strings().ERR_FATAL
+    else:
+        # create DB connection
+        con = connectDb()
+        cur = con.cursor()
+
+        # get time with timezone
+        tz = pytz.timezone(Settings().TimeZone)
+        now = datetime.now(tz)
+
+        # Get schedule changes information
+        qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" + str(studentId) + " AND o.date>'" + str(now) + "' AND o.active=1 ORDER BY o.date, o.startclass"
+        cur.execute(qry)
+        data = cur.fetchall()
+
+        if len(data) > 0:
+            result = Strings().CHANGES_HEADER + "\n"
+
+            # determine change status
+            for row in data:
+                if row[2] == 1:
+                    txtStatus = Strings().CHANGES_CANCELLED
+                elif row[2] == 2:
+                    txtStatus = Strings().CHANGES_POSTPONED
+                elif row[2] == 3:
+                    txtStatus = Strings().CHANGES_RELOCATED
+                elif row[2] == 4:
+                    txtStatus = Strings().CHANGES_REPLACEMENT
+                else:
+                    txtStatus = Strings().CHANGES_SUPPLEMENTARY
+
+                result += row[1] + " " + row[0] + "\n"  #print course code and name
+                result += txtStatus + "\n"
+                result += row[6] + " " + row[3] + " - " + row[4] + "\n"
+                result += row[7] + "\n"
+                result += row[5] + "\n\n"
+        else:
+            result = Strings().CHANGES_NOCHANGES
+
+    # close connection
+    con.close()
+    return result
