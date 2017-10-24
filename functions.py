@@ -146,13 +146,14 @@ def today(userId):
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[4]) + "\n\n"
-            # close connection
-            con.close()
+
             # record activity
             usageLog(studentId, 2)
         else:
             result = Strings().TODAY_EMPTY
 
+        # close connection
+        con.close()
         return result
 
 
@@ -197,8 +198,16 @@ def checkroom(roomInput, userId):
                 result += str(row[5]) + "\n\n"
             # close connection
             con.close()
-            # record activity
-            # usageLog(studentId, 2)
+
+            # check if already registered
+            studentId = verify(userId)
+            if studentId == 0:
+                # user not registered, record as anonymous
+                usageLog(1, 3)
+            else:
+                # user already registered, record user activity
+                usageLog(studentId, 3)
+
         else:
             result = Strings().ROOM_EMPTY
     else:
@@ -252,12 +261,12 @@ def schedule(userId):
 
             # arranging query result so it displayed nicely
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
-
-        # close connection
-        con.close()
         # record activity
-        usageLog(studentId, 3)
-        return result
+        usageLog(studentId, 4)
+
+    # close connection
+    con.close()
+    return result
 
 
 def next(userId):
@@ -309,7 +318,7 @@ def next(userId):
         # close connection
         con.close()
         # record activity
-        usageLog(studentId, 4)
+        usageLog(studentId, 5)
         return result
 
 
@@ -330,6 +339,17 @@ def where(roomInput, userId):
             result += str(row[3]) + "\n"
             result += str(row[4]) + " " + Strings().WHERE_FLOOR + " " + str(row[0]) + "\n"
             result += str(row[5]) + "\n\n"
+
+        # check if already registered
+        studentId = verify(userId)
+        if studentId == 0:
+            # user not registered, record as anonymous
+            usageLog(1, 6)
+        else:
+            # user already registered, record user activity
+            usageLog(studentId, 6)
+
+
     else:
         result = Strings().ROOM_UNREG
     # close connection
@@ -385,6 +405,16 @@ def checkcourse(courseInput, userId):
 
                 # arranging query result so it displayed nicely
                 result += str(row[0]) + " - " + str(row[1]) + " " + str(row[3]) + "\n"
+
+            # check if already registered
+            studentId = verify(userId)
+            if studentId == 0:
+                # user not registered, record as anonymous
+                usageLog(1, 7)
+            else:
+                # user already registered, record user activity
+                usageLog(studentId, 7)
+
         else:
             result = Strings().COURSE_NOCLASS
     else:
@@ -440,6 +470,10 @@ def changes(userId):
                 result += str(row[6]) + " " + str(row[3]) + " - " + str(row[4]) + "\n"
                 result += str(row[7]) + "\n"
                 result += str(row[5]) + "\n\n"
+
+            # record user activity
+            usageLog(studentId, 8)
+
         else:
             result = Strings().CHANGES_NOCHANGES
 
