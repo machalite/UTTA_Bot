@@ -8,98 +8,108 @@ import pytz
 
 
 def connectDb():
-    # create DB connection
+    # to create connection to the database
+
     con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
                           Settings().DBpass, Settings().DBname)
     return con
 
 
 def verify(userId):
+    # to check if user's Line ID already registered in the database or not
+
     # create DB connection
     con = connectDb()
     cur = con.cursor()
 
-    # Get student corresponding to the submitted line id
+    # Get student corresponding to the submitted Line ID
+
     qry = "SELECT id FROM student WHERE lineid='" + userId + "' AND active=1"
     cur.execute(qry)
-    # contain fetch result in array variable
-    row = cur.fetchall()
+    data = cur.fetchall()
+    recAmount = len(data)
 
-    # check if there is a student with matching lineid
-    if len(row) == 0:
-        # no matching lineid
-        result = 0
-    elif len(row) == 1:
-        # there is 1 match, get the student id
-        result = str(row[0][0])
-    else:
-        # other errors
-        result = -1
+    # check if there is a student with matching Line ID
+    if recAmount == 0:  # no matching Line ID
+        result = 0  # not registered
+    elif recAmount == 1:  # found a match
+        studentId = str(data[0][0])
+        result = studentId  # already registered. pass the student ID
+    else:  # there are duplicate student records
+        result = -1  # to signify fatal error
 
-    # close connection
-    con.close()
+    con.close()  # close database connection
     return result
 
 
-def usageLog(studentId, activityId):
+def usageLog(studentId, commandId):
+    # to record user's request
+
     # create DB connection
     con = connectDb()
     cur = con.cursor()
 
-    # get time with timezone
-    tz = pytz.timezone(Settings().TimeZone)
-    now = datetime.now(tz)
+    tz = pytz.timezone(Settings().TimeZone)  # set time zone
+    now = datetime.now(tz)  # get datetime with time zone
 
-    sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(activityId) + ", '" + str(now) + "')"
+    # record user's request
+    sql = "INSERT INTO usagelog (student, activity, timestamp) VALUES(" + str(studentId) + ", " + str(commandId) + ", '" + str(now) + "')"
     cur.execute(sql)
-    con.commit()
-    con.close()
+    con.commit()  # commit changes
+    con.close()  # close database connection
 
 
 def register(authCode, userId):
-    # check if already registered
-    studentId = verify(userId)
-    if studentId == 0:
-        # student have not registered yet
+    # to register user's Line ID in the database
+
+    studentId = verify(userId)  # check if already registered
+
+    if studentId == 0:  # student have not registered yet
+
+        # userId registration
 
         con = connectDb()
         cur = con.cursor()
 
-        # search for matching authentication code
+        # search for student record by matching authentication code
+
         qry = "SELECT id, lineid FROM student WHERE authcode=" + authCode + " AND active=1"
         cur.execute(qry)
-        # contain fetch result in array variable
-        row = cur.fetchall()
+        data = cur.fetchall()
+
+        recAmount = len(data)  # get amount of record
 
         # check if there is a record with matching authcode
-        if len(row) == 0:
-            # no matching lineid
-            result = Strings().REG_INVALID
-        elif len(row) == 1:
-            # there is 1 match, check if lineid is empty (not registered before)
-            if row[0][1] == "":
-                # add user lineid to database
-                sql = "UPDATE student set lineid='" + str(userId) + "' WHERE id=" + str(row[0][0])
-                cur.execute(sql)
-                con.commit()
-                # close connection
-                con.close()
 
-                result = Strings().REG_SUCCESS
-                # record register activity
-                usageLog(studentId, 1)
+        if recAmount == 0:  # no matching lineid
+            result = Strings().REG_INVALID
+        elif recAmount == 1:  # found 1 matching lineid
+
+            recLineId = data[0][1]  # get record lineId
+            recId = str(data[0][0])  # get record ID
+
+            # check if there is line ID
+
+            if recLineId == "":  # no line ID, not registered
+                # add user's line ID to database
+                sql = "UPDATE student SET lineid='" + str(userId) + "' WHERE id=" + recId
+                cur.execute(sql)
+                con.commit()  # commit changes
+
+                result = Strings().REG_SUCCESS # returns success message
+                usageLog(studentId, 1)  # record register activity
             else:
-                result = Strings().REG_EXPIRED
+                result = Strings().REG_EXPIRED  # returns expired auth code message
         else:
-            # other errors
-            result = Strings().REG_FAILED
-    # duplicate student or other errors
+            # other errors, multiple student with same line ID
+            result = Strings().REG_FAILED  # returns failed registration message
+
+        con.close()  # close database connection
     elif studentId == -1:
-        # exception error
-        return Strings().ERR_FATAL
+        return Strings().ERR_FATAL  # returns fatal error message
     else:
         # found matching student, already registered
-        return Strings().REG_ALREADY
+        return Strings().REG_ALREADY  # returns already registered message
 
     return result
 
@@ -147,13 +157,13 @@ def today(userId):
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[4]) + "\n\n"
 
+            # close connection
+            con.close()
             # record activity
             usageLog(studentId, 2)
         else:
             result = Strings().TODAY_EMPTY
 
-        # close connection
-        con.close()
         return result
 
 
@@ -261,11 +271,12 @@ def schedule(userId):
 
             # arranging query result so it displayed nicely
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
+
+        # close connection
+        con.close()
         # record activity
         usageLog(studentId, 4)
 
-    # close connection
-    con.close()
     return result
 
 
@@ -319,7 +330,8 @@ def next(userId):
         con.close()
         # record activity
         usageLog(studentId, 5)
-        return result
+
+    return result
 
 
 def where(roomInput, userId):
@@ -340,6 +352,8 @@ def where(roomInput, userId):
             result += str(row[4]) + " " + Strings().WHERE_FLOOR + " " + str(row[0]) + "\n"
             result += str(row[5]) + "\n\n"
 
+        # close connection
+        con.close()
         # check if already registered
         studentId = verify(userId)
         if studentId == 0:
@@ -348,12 +362,8 @@ def where(roomInput, userId):
         else:
             # user already registered, record user activity
             usageLog(studentId, 6)
-
-
     else:
         result = Strings().ROOM_UNREG
-    # close connection
-    con.close()
     return result
 
 
