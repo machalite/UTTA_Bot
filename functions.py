@@ -103,14 +103,13 @@ def register(authCode, userId):
         else:
             # other errors, multiple student with same line ID
             result = Strings().REG_FAILED  # returns failed registration message
-
-        con.close()  # close database connection
     elif studentId == -1:
         return Strings().ERR_FATAL  # returns fatal error message
     else:
         # found matching student, already registered
         return Strings().REG_ALREADY  # returns already registered message
 
+    con.close()  # close database connection
     return result
 
 
@@ -156,15 +155,14 @@ def today(userId):
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[4]) + "\n\n"
-
-            # close connection
-            con.close()
             # record activity
             usageLog(studentId, 2)
         else:
             result = Strings().TODAY_EMPTY
 
-        return result
+    # close connection
+    con.close()
+    return result
 
 
 def checkroom(roomInput, userId):
@@ -206,8 +204,6 @@ def checkroom(roomInput, userId):
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[5]) + "\n\n"
-            # close connection
-            con.close()
 
             # check if already registered
             studentId = verify(userId)
@@ -222,6 +218,9 @@ def checkroom(roomInput, userId):
             result = Strings().ROOM_EMPTY
     else:
         result = Strings().ROOM_UNREG
+
+    # close connection
+    con.close()
     return result
 
 
@@ -272,11 +271,11 @@ def schedule(userId):
             # arranging query result so it displayed nicely
             result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
 
-        # close connection
-        con.close()
         # record activity
         usageLog(studentId, 4)
 
+    # close connection
+    con.close()
     return result
 
 
@@ -326,11 +325,11 @@ def next(userId):
         else:
             result = Strings().NEXT_NOCLASS
 
-        # close connection
-        con.close()
         # record activity
         usageLog(studentId, 5)
 
+    # close connection
+    con.close()
     return result
 
 
@@ -352,8 +351,6 @@ def where(roomInput, userId):
             result += str(row[4]) + " " + Strings().WHERE_FLOOR + " " + str(row[0]) + "\n"
             result += str(row[5]) + "\n\n"
 
-        # close connection
-        con.close()
         # check if already registered
         studentId = verify(userId)
         if studentId == 0:
@@ -364,6 +361,9 @@ def where(roomInput, userId):
             usageLog(studentId, 6)
     else:
         result = Strings().ROOM_UNREG
+
+    # close connection
+    con.close()
     return result
 
 
@@ -483,7 +483,6 @@ def changes(userId):
 
             # record user activity
             usageLog(studentId, 8)
-
         else:
             result = Strings().CHANGES_NOCHANGES
 
