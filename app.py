@@ -6,12 +6,13 @@ from linebot.exceptions import (
 )
 from flask import Flask, request, abort
 from linebot.models import *
+from settings import *
 from strings import *
 from functions import *
 
 app = Flask(__name__)
-line_bot_api = LineBotApi('cnCjBT66E+ViXO8qj7j7Rj30oeHOtrbqo6gqSxxeW++l28tLJbHdGAUPs8a6MnjAZJHAiymHVDrDfs1xCe89VQ+wWY0RrvHfudjn/5OEfx5IaXRGwX/ZkYJl1ouxbBw/4W+HD7ryJDEjjgmSzdbtWwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('13235caf7d4824dabbbf2a6393c32dfa')
+line_bot_api = LineBotApi(Settings().CHANNEL_TOKEN)
+handler = WebhookHandler(Settings().CHANNEL_SECRET)
 
 
 @app.route("/callback", methods=['POST'])

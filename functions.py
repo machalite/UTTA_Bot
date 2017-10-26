@@ -1,4 +1,3 @@
-#!/usr/bin/python
 from settings import *
 from strings import *
 from datetime import datetime
