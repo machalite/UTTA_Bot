@@ -12,6 +12,7 @@ class Strings:
         self.TRANSLATE = "!translate"
         self.SEARCH = "!search"
         self.HELP = "!help"
+        self.ABOUT = "!about"
         # instructions
         self.INST_REGISTER = "Register your student ID for personalised time table.\nExample !register 2013042032"
         # error messages
@@ -20,7 +21,7 @@ class Strings:
         # URLs
         self.IMGUR_UTTA = "http://imgur.com/Hn0d1DJ"
         # long strings
-        self.ABOUT = "UNIVERSITY TIME TABLE BOT\nCreated by Jonathan"
+        self.ABOUT_CONTENT = "UNIVERSITY TIME TABLE BOT\nCreated by Jonathan"
         # messages on !register
         self.REG_SUCCESS = "Sucessfully registered!"
         self.REG_ALREADY = "You are already registered"

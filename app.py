@@ -51,13 +51,13 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().TODAY:
+    elif inputMsg == Strings().TODAY:
         content = today(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg.startswith(Strings().CHECKROOM):
+    elif inputMsg.startswith(Strings().CHECKROOM):
         index = len(Strings().CHECKROOM) + 1
         roomInput = inputMsg[index:]
         content = checkroom(roomInput, profile.user_id)
@@ -65,19 +65,19 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().SCHEDULE:
+    elif inputMsg == Strings().SCHEDULE:
         content = schedule(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().NEXT:
+    elif inputMsg == Strings().NEXT:
         content = next(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg.startswith(Strings().WHERE):
+    elif inputMsg.startswith(Strings().WHERE):
         index = len(Strings().WHERE) + 1
         roomInput = inputMsg[index:]
         content = where(roomInput, profile.user_id)
@@ -85,7 +85,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg.startswith(Strings().CHECKCOURSE):
+    elif inputMsg.startswith(Strings().CHECKCOURSE):
         index = len(Strings().CHECKCOURSE) + 1
         courseInput = inputMsg[index:]
         content = checkcourse(courseInput, profile.user_id)
@@ -93,49 +93,24 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == Strings().CHANGES:
+    elif inputMsg == Strings().CHANGES:
         content = changes(profile.user_id)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if event.message.text == "!about":
-        content = Strings().ABOUT
+    elif inputMsgt == Strings().ABOUT:
+        content = Strings().ABOUT_CONTENT
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if inputMsg == "coba":
-        content = "Berhasil !!"
+    else:
+        content = Strings().ABOUT_CONTENT
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 'OK'
-    if event.message.text == "!commands":
-        buttons_template = TemplateSendMessage(
-            alt_text=Strings().ERR_PC,
-            template=ButtonsTemplate(
-                title='List of Commands',
-                text='Select a command',
-                # thumbnail_image_url=Strings().IMGUR_UTTA,
-                actions=[
-                    MessageTemplateAction(
-                        label=Strings().REGISTER,
-                        text=Strings().INST_REGISTER
-                    ),
-                    MessageTemplateAction(
-                        label=Strings().TODAY,
-                        text=Strings().TODAY
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-    return 'OK'
 
 
 if __name__ == '__main__':

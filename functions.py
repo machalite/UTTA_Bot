@@ -9,8 +9,8 @@ import pytz
 def connectDb():
     # to create connection to the database
 
-    con = MySQLdb.connect(Settings().DBhost, Settings().DBuser,
-                          Settings().DBpass, Settings().DBname)
+    con = MySQLdb.connect(Settings().DB_HOST, Settings().DB_USER,
+                          Settings().DB_PASS, Settings().DB_NAME)
     return con
 
 
@@ -48,7 +48,7 @@ def usageLog(studentId, commandId):
     con = connectDb()
     cur = con.cursor()
 
-    tz = pytz.timezone(Settings().TimeZone)  # set time zone
+    tz = pytz.timezone(Settings().TIME_ZONE)  # set time zone
     now = datetime.now(tz)  # get datetime with time zone
 
     # record user's request
@@ -117,7 +117,7 @@ def today(userId):
     studentId = verify(userId)
 
     # get timezone
-    tz = pytz.timezone(Settings().TimeZone)
+    tz = pytz.timezone(Settings().TIME_ZONE)
 
     # determine which day is today
     # 0=monday, 6=sunday
@@ -178,7 +178,7 @@ def checkroom(roomInput, userId):
         roomId = data[0][0]
 
         # get time with timezone
-        tz = pytz.timezone(Settings().TimeZone)
+        tz = pytz.timezone(Settings().TIME_ZONE)
 
         # determine which day is today
         # 0=monday, 6=sunday
@@ -294,7 +294,7 @@ def next(userId):
         cur = con.cursor()
 
         # get time with timezone
-        tz = pytz.timezone(Settings().TimeZone)
+        tz = pytz.timezone(Settings().TIME_ZONE)
         now = datetime.now(tz)
 
         # determine which day is today
@@ -450,7 +450,7 @@ def changes(userId):
         cur = con.cursor()
 
         # get time with timezone
-        tz = pytz.timezone(Settings().TimeZone)
+        tz = pytz.timezone(Settings().TIME_ZONE)
         now = datetime.now(tz)
 
         # Get schedule changes information
