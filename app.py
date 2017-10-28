@@ -47,70 +47,43 @@ def handle_message(event):
         index = len(Strings().REGISTER) + 1
         authCode = inputMsg[index:]
         content = register(authCode, profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg == Strings().TODAY:
         content = today(profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg.startswith(Strings().CHECKROOM):
         index = len(Strings().CHECKROOM) + 1
         roomInput = inputMsg[index:]
         content = checkroom(roomInput, profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg == Strings().SCHEDULE:
         content = schedule(profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg == Strings().NEXT:
         content = next(profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg.startswith(Strings().WHERE):
         index = len(Strings().WHERE) + 1
         roomInput = inputMsg[index:]
         content = where(roomInput, profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg.startswith(Strings().CHECKCOURSE):
         index = len(Strings().CHECKCOURSE) + 1
         courseInput = inputMsg[index:]
         content = checkcourse(courseInput, profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     elif inputMsg == Strings().CHANGES:
         content = changes(profile.user_id)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
-    elif inputMsgt == Strings().ABOUT:
+
+    elif inputMsg == Strings().ABOUT:
         content = Strings().ABOUT_CONTENT
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
     else:
         content = Strings().ABOUT_CONTENT
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 'OK'
+
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=content))
+
+    return 'OK'
 
 
 if __name__ == '__main__':
