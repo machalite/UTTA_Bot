@@ -37,6 +37,7 @@ class Strings:
         self.ROOM_UNREG = "Room not found. Please try again"
         self.ROOM_EMPTY = "There is no class in this room for today"
         # messages on !schedule
+        self.SCHEDULE_EMPTY = "You have not signed up for any classes"
         self.SCHEDULE_HEADER = "Weekly schedule:"
         self.SCHEDULE_MON = "Monday:"
         self.SCHEDULE_TUE = "Tuesday:"

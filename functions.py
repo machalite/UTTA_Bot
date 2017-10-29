@@ -154,10 +154,11 @@ def today(userId):
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[4]) + "\n\n"
-            # record activity
-            usageLog(studentId, 2)
         else:
             result = Strings().TODAY_EMPTY
+
+        # record activity
+        usageLog(studentId, 2)
 
     # close connection
     con.close()
@@ -203,18 +204,17 @@ def checkroom(roomInput, userId):
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[5]) + "\n\n"
-
-            # check if already registered
-            studentId = verify(userId)
-            if studentId == 0:
-                # user not registered, record as anonymous
-                usageLog(1, 3)
-            else:
-                # user already registered, record user activity
-                usageLog(studentId, 3)
-
         else:
             result = Strings().ROOM_EMPTY
+
+        # check if already registered
+        studentId = verify(userId)
+        if studentId == 0:
+            # user not registered, record as anonymous
+            usageLog(1, 3)
+        else:
+            # user already registered, record user activity
+            usageLog(studentId, 3)
     else:
         result = Strings().ROOM_UNREG
 
@@ -241,34 +241,39 @@ def schedule(userId):
         # Get weekly schedule
         qry = "SELECT cr.name, cr.code, c.startclass, c.day FROM takencourse t, course cr, class c WHERE t.course=cr.id AND c.course=cr.id AND t.student=" + studentId + " AND c.active=1 ORDER BY c.day, c.startclass"
         cur.execute(qry)
-        # print header
-        result = Strings().SCHEDULE_HEADER + "\n"
 
-        # determine day name
-        curDay = 0
-        for row in cur.fetchall():
-            if row[3] == 1:
-                txtDay = Strings().SCHEDULE_MON
-            elif row[3] == 2:
-                txtDay = Strings().SCHEDULE_TUE
-            elif row[3] == 3:
-                txtDay = Strings().SCHEDULE_WED
-            elif row[3] == 4:
-                txtDay = Strings().SCHEDULE_THU
-            elif row[3] == 5:
-                txtDay = Strings().SCHEDULE_FRI
-            elif row[3] == 6:
-                txtDay = Strings().SCHEDULE_SAT
-            else:
-                txtDay = Strings().SCHEDULE_SUN
+        data = cur.fetchall()
+        if len(data) > 0:
+            # print header
+            result = Strings().SCHEDULE_HEADER + "\n"
 
-            # print day name
-            if row[3] != curDay:
-                result += "\n" + txtDay + "\n"
-                curDay = row[3]
+            # determine day name
+            curDay = 0
+            for row in cur.fetchall():
+                if row[3] == 1:
+                    txtDay = Strings().SCHEDULE_MON
+                elif row[3] == 2:
+                    txtDay = Strings().SCHEDULE_TUE
+                elif row[3] == 3:
+                    txtDay = Strings().SCHEDULE_WED
+                elif row[3] == 4:
+                    txtDay = Strings().SCHEDULE_THU
+                elif row[3] == 5:
+                    txtDay = Strings().SCHEDULE_FRI
+                elif row[3] == 6:
+                    txtDay = Strings().SCHEDULE_SAT
+                else:
+                    txtDay = Strings().SCHEDULE_SUN
 
-            # arranging query result so it displayed nicely
-            result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
+                # print day name
+                if row[3] != curDay:
+                    result += "\n" + txtDay + "\n"
+                    curDay = row[3]
+
+                # arranging query result so it displayed nicely
+                result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
+        else:
+            result = Strings().SCHEDULE_EMPTY
 
         # record activity
         usageLog(studentId, 4)
@@ -310,13 +315,13 @@ def next(userId):
         # Get next class
         qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<'" + str(now) + "' AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass LIMIT 1"
         cur.execute(qry)
-        # print header
-        result = Strings().NEXT_HEADER + "\n"
-
-        # arranging query result so it displayed nicely
         data = cur.fetchall()
+
         if len(data) > 0:
+            # print header
+            result = Strings().NEXT_HEADER + "\n"
             for row in data:
+                # arranging query result so it displayed nicely
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(row[2]) + " - " + str(row[3]) + "\n"
                 result += str(row[5]) + "\n"
