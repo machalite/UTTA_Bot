@@ -277,11 +277,11 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                time = row[2]
+                time = str(row[2])
                 startTime = time.strftime("%H:%M")  # time formatting
 
                 # arranging query result so it displayed nicely
-                result += str(startTime) + " " + str(row[0]) + "\n"
+                result += startTime + " " + str(row[0]) + "\n"
         else:
             result = Strings().SCHEDULE_EMPTY
 
