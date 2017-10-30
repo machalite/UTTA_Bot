@@ -277,7 +277,8 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                startTime = row[2].strftime("%H:%M")  # time formatting
+                time = row[2]
+                startTime = time.strftime("%H:%M")  # time formatting
 
                 # arranging query result so it displayed nicely
                 result += str(startTime) + " " + str(row[0]) + "\n"
