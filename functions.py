@@ -459,7 +459,7 @@ def changes(userId):
         now = datetime.now(tz)
 
         # Get schedule changes information
-        qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.class=c.id AND t.student=" + str(studentId) + " AND o.date>'" + str(now) + "' AND o.active=1 ORDER BY o.date, o.startclass"
+        qry = "SELECT cr.name, cr.code, o.status, o.startclass, o.endclass, o.description, o.date, r.name AS room FROM offclass o, takencourse t, class c, course cr, room r WHERE t.course=cr.id AND c.course=cr.id AND o.room=r.id AND o.class=c.id AND t.student=" + str(studentId) + " AND o.date>'" + str(now) + "' AND o.active=1 ORDER BY o.date, o.startclass"
         cur.execute(qry)
         data = cur.fetchall()
 
