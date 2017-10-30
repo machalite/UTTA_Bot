@@ -96,7 +96,7 @@ def register(authCode, userId):
                 con.commit()  # commit changes
 
                 result = Strings().REG_SUCCESS # returns success message
-                usageLog(studentId, 1)  # record register activity
+                usageLog(recId, 1)  # record register activity
             else:
                 result = Strings().REG_EXPIRED  # returns expired auth code message
         else:
