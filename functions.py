@@ -271,7 +271,7 @@ def schedule(userId):
                     curDay = row[3]
 
                 # arranging query result so it displayed nicely
-                result += str(row[1]) + " " + str(row[0]) + " " + str(row[2]) + "\n"
+                result += str(row[2]) + " " + str(row[0]) + "\n"
         else:
             result = Strings().SCHEDULE_EMPTY
 
@@ -418,7 +418,8 @@ def checkcourse(courseInput, userId):
                     curDay = row[2]
 
                 # arranging query result so it displayed nicely
-                result += str(row[0]) + " - " + str(row[1]) + " " + str(row[3]) + "\n"
+                result += str(row[0]) + " - " + str(row[1]) +  "\n"
+                result += str(row[3]) + "\n"
 
             # check if already registered
             studentId = verify(userId)
