@@ -72,7 +72,7 @@ def register(authCode, userId):
 
         # search for student record by matching authentication code
 
-        qry = "SELECT id, lineid FROM student WHERE authcode=" + authCode + " AND active=1"
+        qry = "SELECT id, lineid FROM student WHERE authcode'=" + authCode + "' AND active=1"
         cur.execute(qry)
         data = cur.fetchall()
 
