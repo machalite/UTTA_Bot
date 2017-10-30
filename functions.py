@@ -4,6 +4,7 @@ from datetime import datetime
 
 import MySQLdb
 import pytz
+import time
 
 
 def connectDb():
@@ -151,8 +152,11 @@ def today(userId):
             result = Strings().TODAY_HEADER
             # arranging query data so it displayed nicely
             for row in data:
+                startTime = time.strftime("%H%M", row[2])  # time formatting
+                endTime = time.strftime("%H%M", row[3])
+
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(row[2]) + " - " + str(row[3]) + "\n"
+                result += str(startTime) + " - " + str(endTime) + "\n"
                 result += str(row[4]) + "\n\n"
         else:
             result = Strings().TODAY_EMPTY
@@ -201,8 +205,11 @@ def checkroom(roomInput, userId):
             result = Strings().ROOM_HEADER + str(data[0][6]) + "\n\n"  # print room name
             # arranging query data so it displayed nicely
             for row in data:
+                startTime = time.strftime("%H%M", row[2])  # time formatting
+                endTime = time.strftime("%H%M", row[3])
+
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(row[2]) + " - " + str(row[3]) + "\n"
+                result += str(startTime) + " - " + str(endTime) + "\n"
                 result += str(row[5]) + "\n\n"
         else:
             result = Strings().ROOM_EMPTY
@@ -270,7 +277,7 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                startTime  = time.strftime("%H%M", row[2])
+                startTime = time.strftime("%H%M", row[2])  # time formatting
 
                 # arranging query result so it displayed nicely
                 result += str(startTime) + " " + str(row[0]) + "\n"
