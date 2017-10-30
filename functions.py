@@ -249,7 +249,7 @@ def schedule(userId):
 
             # determine day name
             curDay = 0
-            for row in cur.fetchall():
+            for row in data:
                 if row[3] == 1:
                     txtDay = Strings().SCHEDULE_MON
                 elif row[3] == 2:
