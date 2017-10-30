@@ -270,8 +270,10 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
+                startTime  = time.strftime("%H%M", row[2])
+
                 # arranging query result so it displayed nicely
-                result += str(row[2]) + " " + str(row[0]) + "\n"
+                result += str(startTime) + " " + str(row[0]) + "\n"
         else:
             result = Strings().SCHEDULE_EMPTY
 
