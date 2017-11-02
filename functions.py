@@ -18,7 +18,7 @@ def formatWaktu(time):
     time = time.total_seconds()
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
-    strTime = '%s.%s.%s' % (hour, minute, second)
+    strTime = '%s' % (hour, minute)
     return strTime
 
 
