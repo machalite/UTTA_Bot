@@ -5,21 +5,15 @@ from datetime import datetime
 import MySQLdb
 import pytz
 import time
+import math
 
-
-# def timeFormat(time):
-#     time = str(time)
-#     hour = time[0:2]
-#     minute = time[3:5]
-#     newTime = hour + "." + minute
-#     return newTime
 
 def formatWaktu(time):
     time = time.total_seconds()
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
-    strTime = str(hour) + "." + str(minute)
-    # strTime = '%s:%s' % (hour, minute)
+
+    strTime = '%s:%s' % (int(math.floor(hour)), int(math.floor(minute)))
     return strTime
 
 
