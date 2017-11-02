@@ -152,8 +152,8 @@ def today(userId):
             result = Strings().TODAY_HEADER
             # arranging query data so it displayed nicely
             for row in data:
-                startTime = time.strftime("%H%M", row[2])  # time formatting
-                endTime = time.strftime("%H%M", row[3])
+                startTime = time.strftime("%H:%M", row[2])  # time formatting
+                endTime = time.strftime("%H:%M", row[3])
 
                 result += str(row[1]) + " " + str(row[0]) + "\n"
                 result += str(startTime) + " - " + str(endTime) + "\n"
