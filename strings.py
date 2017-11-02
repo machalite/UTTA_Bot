@@ -1,5 +1,15 @@
 class Strings:
     def __init__(self):
+        # help content
+        self.HELP_CONTENT = 'LIST OF COMMANDS\n'\
+                            '!register <auth code> --> registers your LINE ID\n'\
+                            '!today --> lists all classes for today\n'\
+                            '!checkroom <room code or room name> --> lists all classes held in that room for today\n'\
+                            '!schedule --> shows your weekly schedule\n'\
+                            '!next --> shows information of next class\n'\
+                            '!where --> shows requested room information\n'\
+                            '!checkcourse <course code> --> shows requested course information\n'\
+                            '!!changes --> lists schedule changes'
         # command keywords
         self.REGISTER = "!register"
         self.TODAY = "!today"

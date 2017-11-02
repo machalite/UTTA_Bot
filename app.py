@@ -78,8 +78,11 @@ def handle_message(event):
     elif inputMsg == Strings().ABOUT:
         content = Strings().ABOUT_CONTENT
 
+    elif inputMsg == Strings().HELP:
+        content = Strings().HELP_CONTENT
+
     else:
-        content = Strings().ABOUT_CONTENT
+        content = Strings().HELP_CONTENT
 
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=content))
 
