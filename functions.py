@@ -465,7 +465,7 @@ def checkcourse(courseInput, userId):
                 usageLog(studentId, 7)
 
         else:
-            result = Strings().COURSE_NOCLASS
+            result += Strings().COURSE_NOCLASS
     else:
         result = Strings().COURSE_INVALID
 
