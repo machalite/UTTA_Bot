@@ -9,12 +9,15 @@ import math
 
 
 def formatTime(time):
+    # formats timedelta from database
     time = time.total_seconds()
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
 
-    hour = int(math.floor(hour))
+    hour = int(math.floor(hour)) # get number without decimal
     minute = int(math.floor(minute))
+
+    # added 0 if minute only 1 digit
     if minute < 10:
         minute = str(minute) + "0"
     else:
@@ -338,7 +341,7 @@ def next(userId):
             today += 1
 
         # Get next class
-        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass<'" + str(now) + "' AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass LIMIT 1"
+        qry = "SELECT cr.name, cr.code, c.startclass, c.endclass, l.name AS lecturer, r.name AS room FROM takencourse t, course cr, class c, room r, lecturer l WHERE t.course=cr.id AND c.course=cr.id AND cr.lecturer=l.id AND c.room=r.id AND c.startclass>'" + str(now) + "' AND c.day=" + str(today) + " AND c.active=1 AND t.student=" + str(studentId) + " ORDER BY c.startclass LIMIT 1"
         cur.execute(qry)
         data = cur.fetchall()
 
