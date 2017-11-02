@@ -7,6 +7,21 @@ import pytz
 import time
 
 
+# def timeFormat(time):
+#     time = str(time)
+#     hour = time[0:2]
+#     minute = time[3:5]
+#     newTime = hour + "." + minute
+#     return newTime
+
+def timeDeltaFormat(time):
+    time = time.total_seconds()
+    hour, remainder = divmod(time, 3600)
+    minute, second = divmod(remainder, 60)
+    strTime = '%s.%s' % (hour, minute)
+    return strTime
+
+
 def connectDb():
     # to create connection to the database
 
@@ -281,12 +296,7 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                hours, remainder = divmod(row[2], 3600)
-                minutes, seconds = divmod(remainder, 60)
-                startTime = '%s:%s' % (hours, minutes)
-
-                # time = row[2]
-                # startTime = time.strftime("%H:%M")  # time formatting
+                startTime = timeDeltaFormat(row[2])
 
                 # arranging query result so it displayed nicely
                 result += startTime + " " + str(row[0]) + "\n"
