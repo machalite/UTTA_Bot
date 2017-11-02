@@ -8,7 +8,7 @@ import time
 import math
 
 
-def formatWaktu(time):
+def formatTime(time):
     time = time.total_seconds()
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
@@ -19,7 +19,7 @@ def formatWaktu(time):
         minute = str(minute) + "0"
     else:
         minute = str(minute)
-    strTime = str(hour) + minute
+    strTime = str(hour) + "." + minute
     return strTime
 
 
@@ -168,15 +168,11 @@ def today(userId):
             result = Strings().TODAY_HEADER
             # arranging query data so it displayed nicely
             for row in data:
-                startTime = row[2]
-                startTime = startTime.strftime("%H:%M")
-                endTime = row[3]
-                endTime = endTime.strftime("%H:%M")
-                # startTime = time.strftime("%H:%M", row[2])  # time formatting
-                # endTime = time.strftime("%H:%M", row[3])
+                startTime = formatTime(row[2])  # time formatting
+                endTime = formatTime(row[3])
 
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(startTime) + " - " + str(endTime) + "\n"
+                result += startTime + " - " + endTime + "\n"
                 result += str(row[4]) + "\n\n"
         else:
             result = Strings().TODAY_EMPTY
@@ -225,11 +221,11 @@ def checkroom(roomInput, userId):
             result = Strings().ROOM_HEADER + str(data[0][6]) + "\n\n"  # print room name
             # arranging query data so it displayed nicely
             for row in data:
-                startTime = time.strftime("%H%M", row[2])  # time formatting
-                endTime = time.strftime("%H%M", row[3])
+                startTime = formatTime(row[2])  # time formatting
+                endTime = formatTime(row[3])
 
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(startTime) + " - " + str(endTime) + "\n"
+                result += startTime + " - " + endTime + "\n"
                 result += str(row[5]) + "\n\n"
         else:
             result = Strings().ROOM_EMPTY
@@ -297,7 +293,7 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                startTime = formatWaktu(row[2])
+                startTime = formatTime(row[2])
 
                 # arranging query result so it displayed nicely
                 result += startTime + " " + str(row[0]) + "\n"
@@ -350,9 +346,12 @@ def next(userId):
             # print header
             result = Strings().NEXT_HEADER + "\n"
             for row in data:
+                startTime = formatTime(row[2])  # time formatting
+                endTime = formatTime(row[3])
+
                 # arranging query result so it displayed nicely
                 result += str(row[1]) + " " + str(row[0]) + "\n"
-                result += str(row[2]) + " - " + str(row[3]) + "\n"
+                result += startTime + " - " + endTime + "\n"
                 result += str(row[5]) + "\n"
                 result += str(row[4]) + "\n"
         else:
@@ -447,7 +446,10 @@ def checkcourse(courseInput, userId):
                     curDay = row[2]
 
                 # arranging query result so it displayed nicely
-                result += str(row[0]) + " - " + str(row[1]) +  "\n"
+                startTime = formatTime(row[0])  # time formatting
+                endTime = formatTime(row[1])
+
+                result += startTime + " - " + endTime +  "\n"
                 result += str(row[3]) + "\n"
 
             # check if already registered
@@ -509,9 +511,12 @@ def changes(userId):
                 else:
                     txtStatus = Strings().CHANGES_SUPPLEMENTARY
 
+                startTime = formatTime(row[3])  # time formatting
+                endTime = formatTime(row[4])
+
                 result += str(row[1]) + " " + str(row[0]) + "\n"  #print course code and name
                 result += txtStatus + "\n"
-                result += str(row[6]) + " " + str(row[3]) + " - " + str(row[4]) + "\n"
+                result += str(row[6]) + " " + startTime + " - " + endTime + "\n"
                 result += str(row[7]) + "\n"
                 result += str(row[5]) + "\n\n"
 
