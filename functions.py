@@ -13,7 +13,13 @@ def formatWaktu(time):
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
 
-    strTime = '%s:%s' % (int(math.floor(hour)), int(math.floor(minute)))
+    hour = int(math.floor(hour))
+    minute = int(math.floor(minute))
+    if minute < 10:
+        minute = str(minute) + "0"
+    else:
+        minute = str(minute)
+    strTime = str(hour) + minute
     return strTime
 
 
