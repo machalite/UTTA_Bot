@@ -14,7 +14,7 @@ import time
 #     newTime = hour + "." + minute
 #     return newTime
 
-def timeDeltaFormat(time):
+def formatWaktu(time):
     time = time.total_seconds()
     hour, remainder = divmod(time, 3600)
     minute, second = divmod(remainder, 60)
@@ -296,7 +296,7 @@ def schedule(userId):
                     result += "\n" + txtDay + "\n"
                     curDay = row[3]
 
-                startTime = timeDeltaFormat(row[2])
+                startTime = formatWaktu(row[2])
 
                 # arranging query result so it displayed nicely
                 result += startTime + " " + str(row[0]) + "\n"
