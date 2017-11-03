@@ -329,6 +329,7 @@ def next(userId):
         # get time with timezone
         tz = pytz.timezone(Settings().TIME_ZONE)
         now = datetime.now(tz)
+        print(now)
 
         # determine which day is today
         # 0=monday, 6=sunday
