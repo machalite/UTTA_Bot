@@ -521,7 +521,8 @@ def changes(userId):
 
                 result += str(row[1]) + " " + str(row[0]) + "\n"  #print course code and name
                 result += txtStatus + "\n"
-                result += str(row[6]) + " " + startTime + " - " + endTime + "\n"
+                result += str(row[6]) + "\n"
+                result += startTime + " - " + endTime + "\n"
                 result += str(row[7]) + "\n"
                 result += str(row[5]) + "\n\n"
 
